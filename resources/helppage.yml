@@ -1,0 +1,23 @@
+help:
+#帮助提示
+  oppages:
+    - oppage1
+  pages:
+    - page1
+  page1:
+    - ' help [页码]'
+    - '§e- §a获取帮助'
+  oppage1:
+    - ' do <是否安全> <是否满级> <额外成功几率>'
+    - '§e- §a进行一次手动强化'
+    - ' reload'
+    - '§e- §a重载配置'
+    - ' give <玩家名> <强化石名> <数量>'
+    - '§e- §a获取强化石 §d比如§5>§a>§b>§e>§enormal §asafe §dluck §2vip'
+  page: '§a当前页码：§e [pagenow] §c共：§e [maxpage] §a页'
+  head: '§c§m§l  §6§m§l  §e§m§l  §a§m§l  §b§m§l  §a§k!||§a强化插件§a§k!||§c§m§l  §6§m§l  §e§m§l  §a§m§l  §b§m§l  '
+  last: '§c§m§l  §6§m§l  §e§m§l  §a§m§l  §b§m§l  §c§m§l  §6§m§l  §e§m§l  §a§m§l  §b§m§l  §c§m§l  §6§m§l  §e§m§l  §a§m§l  §b§m§l  '
+  start: §b/
+  help: ' help [页码] §e以获取帮助'
+error:
+ notnum: '§c参数错误,请输入数字'

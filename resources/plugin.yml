@@ -1,0 +1,5 @@
+name: Intensify4
+main: ksqeib.Intensify.Main
+version: 2.0
+author: ksqeib
+depend: [ksAPI]
