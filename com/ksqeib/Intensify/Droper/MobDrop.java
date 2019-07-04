@@ -1,8 +1,7 @@
 package ksqeib.Intensify.Droper;
 
 
-import ksqeib.Intensify.Main;
-import ksqeib.Intensify.util.Dataer;
+import ksqeib.Intensify.main.Intensify;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,7 +25,7 @@ public class MobDrop
     	//是否为玩家
       return;
     }
-    if (!Main.um.getIo().config.getBoolean("drop.mob")) {
+    if (!Intensify.um.getIo().getaConfig("config").getBoolean("drop.mob")) {
     	//是否允许掉了
       return;
     }
@@ -38,10 +37,10 @@ public class MobDrop
     EntityType et = e.getEntityType();
     //获取生物
     int id = -1;
-    for (int i = 0; i < Dataer.getMobId().size(); i++)
+    for (int i = 0; i < Intensify.dataer.getMobId().size(); i++)
     {
     	//遍历查询
-      int a = Integer.parseInt(((String)Dataer.getMobId().get(i)).split(" ")[0]);
+      int a = Integer.parseInt(((String)Intensify.dataer.getMobId().get(i)).split(" ")[0]);
       if (a == et.getTypeId())
       {
     	  //生物ID正确
@@ -53,14 +52,14 @@ public class MobDrop
     {
     	//生物ID正确
       ItemStack item = null;
-      Double key = Dataer.rm.nextDouble()*100;
-      String type = ((String)Dataer.getMobId().get(id)).split(" ")[1].toLowerCase();
+      Double key = Intensify.dataer.rm.nextDouble()*100;
+      String type = ((String)Intensify.dataer.getMobId().get(id)).split(" ")[1].toLowerCase();
       //标签
-      Double chance = Double.parseDouble(Dataer.getMobId().get(id).split(" ")[2]);
+      Double chance = Double.parseDouble(Intensify.dataer.getMobId().get(id).split(" ")[2]);
       //概率
-      item = Dataer.getItem(type);
+      item = Intensify.dataer.getItem(type);
       if (key < chance&&p!=null) {
-    	  Main.um.getTip().getDnS(p,"qhdrop",new String[]{item.getItemMeta().getDisplayName()});
+    	  Intensify.um.getTip().getDnS(p,"qhdrop",new String[]{item.getItemMeta().getDisplayName()});
     	  //比概率小
         e.getDrops().add(item);
       }

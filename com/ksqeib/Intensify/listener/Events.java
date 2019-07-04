@@ -1,7 +1,6 @@
-package ksqeib.Intensify.event;
+package ksqeib.Intensify.listener;
 
-import ksqeib.Intensify.Main;
-import ksqeib.Intensify.util.Dataer;
+import ksqeib.Intensify.main.Intensify;
 import ksqeib.Intensify.util.Isqh;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -19,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-import static ksqeib.Intensify.Main.um;
+import static ksqeib.Intensify.main.Intensify.um;
 
 @SuppressWarnings({"deprecation"})
 public class Events implements Listener {
@@ -62,24 +61,22 @@ public class Events implements Listener {
     }
 
     public boolean furnCheck(Furnace furn) {
-        boolean flag = false;
         //来开熔炉的玩家
-        UUID pu = Dataer.player.get(furn.getBlock().hashCode());
+        UUID pu = Intensify.dataer.player.get(furn.getBlock().hashCode());
         Player p= Bukkit.getPlayer(pu);
         ItemStack smelt = furn.getInventory().getSmelting();
         ItemStack fuel = furn.getInventory().getFuel();
-        if (smelt.getEnchantmentLevel(Main.enchan.getEnchan(um.getIo().config.getInt("id.items." + smelt.getTypeId()))) >= Dataer.getLevel("maxlevel")) {
+        if (smelt.getEnchantmentLevel(Intensify.enchan.getEnchan(um.getIo().getaConfig("config").getInt("id.items." + smelt.getTypeId()))) >= Intensify.dataer.maxlevel) {
             //满级
             um.getTip().getDnS(p, "mmaxqh", null);
             return false;
         }
         if (Isqh.isqhStone(fuel)) {
             //是否为强化石
-            flag = Isqh.isCanQhWeapon(smelt);
             //是否可强化
-            if (flag) {
+            if (Isqh.isCanQhWeapon(smelt)) {
                 int hash = furn.getBlock().hashCode();
-                Dataer.fuelItem.put(Integer.valueOf(hash), fuel);
+                Intensify.dataer.fuelItem.put(hash, Isqh.getNBTID(fuel));
                 return true;
             }
             return false;
@@ -95,12 +92,12 @@ public class Events implements Listener {
         }
         Player p = e.getPlayer();
         int hash = e.getClickedBlock().hashCode();
-        if (Dataer.player.get(hash) != null) {
-            Dataer.player.remove(hash);
-            Dataer.player.put(hash, p.getUniqueId());
+        if (Intensify.dataer.player.get(hash) != null) {
+            Intensify.dataer.player.remove(hash);
+            Intensify.dataer.player.put(hash, p.getUniqueId());
             return;
         }
-        Dataer.player.put(hash, p.getUniqueId());
+        Intensify.dataer.player.put(hash, p.getUniqueId());
     }
 
     @EventHandler

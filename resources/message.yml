@@ -1,40 +1,106 @@
-#Author:ksqeib
-#  消息系统
-#    1,普通的写
-#  mhead: '§c签到§7 >>'
-#  enable: §a插件已启动！
-#    和往常一样，你知道的，显示效果就是
-#    §c签到§7 >>§a插件已启动
-#  2.前面加 '=' 比如这样 subwrong: "=&c参数错误！"
-#    会发生什么？ 看！  去掉了消息头
-#    &c参数错误！
-#  3.加 '+' 比如 wrong: "+&e发生未知错误"
-#    会在玩家物品栏上显示=-= 暂时不支持多符号,这里用文档解释不了，试试就知道了
-#    4.加 '-' 就是会强行显示消息头，没什么可说的
-#    5.加 '!' 会在全服公告这条消息，也没什么可说的
-#    6.含带分隔符 '-;-' 会给玩家发送title 格式 淡入时间-;-停留时间-;-淡出时间-;-消息内容
-#    7.含带分隔符 '=.=' 会给玩家播放音乐 格式 音乐类型=.=音量=.=距离=.=消息内容
-#    格式是
-#    淡入时间-;-停留时间-;-淡出时间-;-第一行消息-;-第二行消息
-#    比如
-#  tipget: '50-;-20-;-50-;-成功领取奖励！-;-一个曲奇饼！'
-mhead: ''
-enable: '§a插件已启动！'
-disable: '§a插件已关闭！'
-reload: '§a插件重载完成！'
-load: '§a插件已加载！'
-nop: '§c§l您无权进行此操作！'
-iconsle: "§c此命令只能由玩家发出"
-subwrong: "§c参数错误！"
-qhsu: "§a§l强化成功"
-qhfail: "§c§l强化失败"
-hqhfail: "§c§l完了!你的武器在{0}级以上并且未使用安全强化石，武器永久破碎了!不要灰心！碎碎平安！"
-toall: "§a恭喜玩家 §c{0} §a把装备强化到了 §5{1} §a级"
-qhdrop: "{0} §7§l已掉落"
-mmaxqh: "§c已经满级了,无法再进行强化了哟~"
-qhxx: "§a§l§a[ §b▷ §e§l强化信息 §b◁ §a]"
-qhlel: "§7>> §6强化等级： §6+{0} "
-maxqh: "§5§l最高等级§7§l(无法再强化)"
-nqh: "§5§l此物品不弄被用于强化哟"
-toinventory: "§a已发送到背包"
-wrong: "§e在执行指令时发生未知错误"
+ADD_CANCEL_PROMPT:
+- §f[§d淬炼保护符§f]§c你取消了本次淬炼保护!
+ADD_PROMPT_LIST:
+- §f[§d淬炼保护符§f]§a你正在使用{0} §a按E打开背包，鼠标右键点击一件可淬炼的装备来对它附加淬炼保护 §a或者右键点击背包空位来取消本次淬炼保护
+ALL_SERVER_PROMPT:
+- §6[§6§l恭喜§6]{2}§a用{1}§a成功将装备淬炼至§6{0}
+ANTI_INJURY_LORE:
+- §a反伤效果§4+{0}%
+APPEND_TO_THE_RIGHT_KEY:
+- §f[§d淬炼保护符§f]§c请在背包内右键
+BLOOD_SUCKING_LORE:
+- §a吸血§4+{0}%
+CAN_ADD_PROMPT:
+- §a§l附加淬炼保护成功,§d成功对装备附加:{0}
+CAN_CUILIAN_PROMPT:
+- §a§l淬炼成功,§e装备目前为：{0}
+CAN_NOT_ADD_PROMPT:
+- §f[§d淬炼保护符§f]§c这个物品不能够进行淬炼保护.
+CAN_NOT_CUILIAN:
+- §a§l大于最高淬炼等级，无法淬炼
+CUILIAN_OVER:
+- §c§l淬炼失败,§e装备目前为：{0}§7(降{1}星)
+CUILIAN_OVER_ZERO:
+- §c§l淬炼失败,§e装备目前为：§f§l零星淬炼§7(降{0}星)
+DAMAGE_LORE:
+- §a附加伤害+{0}
+DEFENSE_LORE:
+- §a附加防御+{0}
+EXPRIENCE:
+- §a附加经验§e+{0}%
+FALL_LORE:
+- §a跌落减伤+{0}%
+FIRST:
+- '§e§l淬炼属性:'
+FUCK_BAOHUFU:
+- §c§l旧的淬炼保护符已拆除
+HAS_BAOHUFU_CUILIAN_OVER:
+- §c§l淬炼失败,§e装备目前为：{0}§a(使用淬炼保护)§7(降{1}星)
+JOIN_SERVER_NOTICE:
+- §e§l{0}§a§l携带着淬炼装备进入了游戏
+JUMP_LORE:
+- §a跳跃加成+§e{0}级
+MOVE_LEVEL_INVENTORY_NAME:
+- §e§l淬炼移星
+TZXG_FALSE:
+- §a你失去了{0}§a§l套装效果
+TZXG_TRUE:
+- §a你激活了{0}§a§l套装效果
+UNDER_LINE:
+- '§c§m§l  §6§m§l  §e§m§l  §a§m§l  §b§m§l  §e§l装备淬炼§b§m§l  §a§m§l  §e§m§l  §6§m§l  §c§m§l  '
+disable:
+- §a插件已关闭！
+enable:
+- §a插件已启动！
+hqhfail:
+- §c§l完了!你的武器在{0}级以上并且未使用安全强化石，武器永久破碎了!不要灰心！碎碎平安！
+iconsle:
+- §c此命令只能由玩家发出
+load:
+- §a插件已加载！
+maxqh:
+- §5§l最高等级§7§l(无法再强化)
+mhead:
+- ''
+mmaxqh:
+- §c已经满级了,无法再进行强化了哟~
+nop:
+- §c§l您无权进行此操作！
+nqh:
+- §5§l此物品不弄被用于强化哟
+qhdrop:
+- '{0} §7§l已掉落'
+qhfail:
+- §c§l强化失败
+qhlel:
+- '§7>> §6强化等级： §6+{0} '
+qhsu:
+- §a§l强化成功
+qhxx:
+- §a§l§a[ §b▷ §e§l强化信息 §b◁ §a]
+reload:
+- §a插件重载完成！
+subwrong:
+- §c参数错误！
+toall:
+- §a恭喜玩家 §c{0} §a把装备强化到了 §5{1} §a级
+toinventory:
+- §a已发送到背包
+wrong:
+- §e在执行指令时发生未知错误
+bloodSuck_LORE:
+- §a吸血§4+{0}%
+damage_LORE:
+- §a附加伤害+{0}
+defense_LORE:
+- §a附加防御+{0}
+experience_LORE:
+- §a附加经验§e+{0}%
+jump_LORE:
+- §a跳跃加成+§e{0}级
+lore_end:
+- 淬炼
+lore_head:
+- §4§l
+reboundDamage_LORE:
+- §a反伤效果§4+{0}%

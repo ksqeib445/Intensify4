@@ -1,7 +1,6 @@
 package ksqeib.Intensify.Droper;
 
-import ksqeib.Intensify.Main;
-import ksqeib.Intensify.util.Dataer;
+import ksqeib.Intensify.main.Intensify;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,15 +17,15 @@ public class BlockDrop implements Listener {
 			//结束没
 			return;
 		}
-		if (!Main.um.getIo().config.getBoolean("drop.block")) {
+		if (!Intensify.um.getIo().getaConfig("config").getBoolean("drop.block")) {
 			return;
 		}
 		Block block = e.getBlock();
 		Player p = e.getPlayer();
 		//偷瞄方块和玩家
 		int id = -1;
-		for (int i = 0; i < Dataer.getBlockId().size(); i++) {
-			int a = Integer.parseInt(((String) Dataer.getBlockId().get(i)).split(" ")[0]);
+		for (int i = 0; i < Intensify.dataer.getBlockId().size(); i++) {
+			int a = Integer.parseInt(((String) Intensify.dataer.getBlockId().get(i)).split(" ")[0]);
 			if (a == block.getTypeId()) {
 				//判断是否为掉了方块
 				id = i;
@@ -37,16 +36,16 @@ public class BlockDrop implements Listener {
 			//如果不是没有
 			ItemStack item = null;
 			//几率(生成的)
-		      Double key = Dataer.rm.nextDouble()*100;
+		      Double key = Intensify.dataer.rm.nextDouble()*100;
 			
-			String type = ((String) Dataer.getBlockId().get(id)).split(" ")[1].toLowerCase();
+			String type = ((String) Intensify.dataer.getBlockId().get(id)).split(" ")[1].toLowerCase();
 			//几率(文件里的)
-		      Double chance = Double.parseDouble(Dataer.getBlockId().get(id).split(" ")[2]);
+		      Double chance = Double.parseDouble(Intensify.dataer.getBlockId().get(id).split(" ")[2]);
 			
-			item = Dataer.getItem(type);
+			item = Intensify.dataer.getItem(type);
 			if ((key < chance)&&p!=null) {
 				//比概率小
-				Main.um.getTip().getDnS(p,"qhdrop",new String[]{item.getItemMeta().getDisplayName()});
+				Intensify.um.getTip().getDnS(p,"qhdrop",new String[]{item.getItemMeta().getDisplayName()});
 				//掉在地上
 				block.getWorld().dropItem(block.getLocation(), item);
 			}

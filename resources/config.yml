@@ -27,26 +27,20 @@ chance:
   #注意：成功几率 = 默认强化几率 + 强化石加成几率;
   #强化几率设置
   #默认强化几率设置
-  default: 100,100,85,75,65,45,35,20,5,10,5
-  #每级概率间隔
-  pass: 5
-  #最大概率
-  max: 100
-  #0-10默认强化几率
-  normal: 0
-  #普通强化石加成最大100
-  luck: 8
-  #幸运强化石加成最大100
-  safe: 3
-  #安全强化石加成最大100
-  vip: 5
+  #最高等级为几率数量
+  default:
+    - 100
+    - 100
+    - 85
+    - 75
+    - 65
+    - 45
+    - 35
+    - 20
+    - 5
+    - 10
+    - 5
 #vip强化石加成最大100
-safer:
-#  是否安全
-  normal: false
-  luck: false
-  safe: true
-  vip: true
 #################################可用怪物ID################################
 #(50)爬行者 (51)骷髅 (52)蜘蛛 (53)巨人 (54)僵尸 (55)史莱姆                #
 #(56)恶魂 (57)僵尸猪人 (58)末影人 (59)洞穴蜘蛛 (60)蠹虫                   #
@@ -92,76 +86,91 @@ drop:
 style:
   #强化风格设置
   color: "&3&l"
-  #颜色
+  #一级
   a: "●"
-  #有等级
+  #五级
   b: "○"
 #无等级
 level:
-  #最高等级
-  maxlevel: 10
   #全服通知的最低等级
   boardlevel: 5
   #超过多少级丢失
   boomlevel: 5
-###############
-#####物 品#####
-###############
-
+#淬炼部分
+cuilian:
+  #使用默认的力量
+  UsingDefaultPower: true
+  #超过多少级丢失
+  boomlevel: 5
+  #最高等级
+  maxlevel: 100
+  #到达多少星开始提示
+  noticelevel: 20
+  #多少星之后可以使用粒子特效
+  suitEffectlevel: 5
+  #移星花费
+  moveLevelUse: 1
+  style:
+    #一星
+    a: "★"
+    #五星
+    b: "☆"
+UsingDefaultPower: true
+power:
+  arms:
+    - damage
+    - bloodSuck
+    - experience
+  helmet:
+    - defense
+    - experience
+  chestplate:
+    - defense
+    - reboundDamage
+    - experience
+  leggings:
+    - defense
+    - experience
+  boots:
+    - defense
+    - jump
+    - experience
+local:
+  arms:
+    - hand
+  helmet:
+    - bag
+  chestplate:
+    - bag
+  leggings:
+    - bag
+  boots:
+    - bag
 items:
-  #强化物品设置
-  normal:
-    ==: org.bukkit.inventory.ItemStack
-    type: EMERALD
-    meta:
-      ==: ItemMeta
-      meta-type: UNSPECIFIC
-      display-name: §a§l普通强化石
-      lore:
-      - §a【功能】
-      - §6▸ §7提升武器/装备等级
-      - §6▸ §c强化超过 5 级失败会使装备丢失
-      - §a【用法】
-      - §c 放到熔炉,燃烧武器/装备
-  luck:
-    ==: org.bukkit.inventory.ItemStack
-    type: EMERALD
-    meta:
-      ==: ItemMeta
-      meta-type: UNSPECIFIC
-      display-name: §5§l幸运强化石
-      lore:
-      - §a【功能】
-      - §6▸ §7提升武器/装备等级
-      - §6• §3提高 15% 强化几率
-      - §6▸ §c强化超过 5 级失败会使装备丢失
-      - §a【用法】
-      - §c 放到熔炉,燃烧武器/装备
-  safe:
-    ==: org.bukkit.inventory.ItemStack
-    type: EMERALD
-    meta:
-      ==: ItemMeta
-      meta-type: UNSPECIFIC
-      display-name: §9§l安全强化石
-      lore:
-      - §a【功能】
-      - §6▸ §7提升武器/装备等级
-      - §6• §3提高 6% 强化几率
-      - §6• §36级后强化失败武器不会丢失
-      - §a【用法】
-      - §c 放到熔炉,燃烧武器/装备
-  vip:
-    ==: org.bukkit.inventory.ItemStack
-    type: EMERALD
-    meta:
-      ==: ItemMeta
-      meta-type: UNSPECIFIC
-      display-name: §a§lMVP§7/§6§lMVP+§b§l会员强化石
-      lore:
-      - §a【功能】
-      - §6▸ §a§lMVP§7/§6§lMVP+§7会员专用
-      - §6• §3提高高 10% 几率
-      - §6• §36级后强化失败武器不会损坏
-      - §a【用法】
-      - §c 放到熔炉,燃烧武器/装备
+  arms:
+    - GOLD_SWORD
+    - IRON_SWORD
+    - WOOD_SWORD
+    - STONE_SWORD
+    - BOW
+    - DIAMOND_SWORD
+  helmet:
+    - CHAINMAIL_HELMET
+    - GOLD_HELMET
+    - IRON_HELMET
+    - DIAMOND_HELMET
+  chestplate:
+    - CHAINMAIL_CHESTPLATE
+    - GOLD_CHESTPLATE
+    - IRON_CHESTPLATE
+    - DIAMOND_CHESTPLATE
+  leggings:
+    - CHAINMAIL_LEGGINGS
+    - GOLD_LEGGINGS
+    - IRON_LEGGINGS
+    - DIAMOND_LEGGINGS
+  boots:
+    - CHAINMAIL_BOOTS
+    - GOLD_BOOTS
+    - IRON_BOOTS
+    - DIAMOND_BOOTS
