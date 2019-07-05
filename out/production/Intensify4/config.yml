@@ -1,0 +1,176 @@
+﻿###############
+#####配 置#####
+###############
+#########################可用附魔ID################################
+#0-保护,1-火焰保护,2-摔落保护,3-爆炸保护,4-弹射物保护,5-水下呼吸  #
+#6-水下速掘,7-荆棘,8-深海探索者,9-冰霜行者,10-绑定诅咒,16-锋利    #
+#17-亡灵杀手,18-节肢杀手,19-击退,20-火焰附加,21-抢夺,22-横扫      #
+#32-效率,33-精准采集,34-耐久,35-时运,48-力量,49-冲击,50-火矢      #
+#51-无限,70-经验修补                                              #
+###################################################################
+#添加自定义强化石系统 在items 中添加强化石(key) 然后在chance和safer中添加对应key对应的概率和安全性
+#指令给予也是对应key
+id:
+  items:
+    #格式: <物品ID>: <附魔ID>
+    #例子 276: 16
+    #强化276的物品 附魔效果为16(ID观看配置文件顶部)
+    276: 16
+    279: 16
+    261: 48
+    442: 34
+    310: 0
+    311: 0
+    312: 0
+    313: 0
+chance:
+  #注意：成功几率 = 默认强化几率 + 强化石加成几率;
+  #强化几率设置
+  #默认强化几率设置
+  #最高等级为几率数量
+  default:
+    - 100
+    - 100
+    - 85
+    - 75
+    - 65
+    - 45
+    - 35
+    - 20
+    - 5
+    - 10
+    - 5
+#vip强化石加成最大100
+#################################可用怪物ID################################
+#(50)爬行者 (51)骷髅 (52)蜘蛛 (53)巨人 (54)僵尸 (55)史莱姆                #
+#(56)恶魂 (57)僵尸猪人 (58)末影人 (59)洞穴蜘蛛 (60)蠹虫                   #
+#(61)烈焰人 (62)岩浆怪 (63)末影龙 (64)凋灵 (66)女巫  等等...              #
+#################################可用怪物ID################################
+drop:
+  #掉落设置
+  block: true
+  #打破方块掉落是否启用
+  blocks:
+  #方块掉落配置
+  - "1 normal 0.01"
+  #格式: <方块ID> <类型> <几率 > ID请看最上面
+  #例子: - "1 normal 10"
+  #为打破ID为1的方块,有10%的几率掉落普通强化石
+  #类型: normal luck safe vip (大小写不敏感)
+  mob: true
+  #怪物掉落启用
+  mobs:
+  #怪物掉落配置
+  - "50 normal 0.5"
+  - "51 normal 0.5"
+  - "52 normal 0.5"
+  - "53 normal 1"
+  - "54 normal 0.5"
+  - "55 normal 1"
+  - "56 normal 1"
+  - "57 normal 1"
+  - "58 normal 1"
+  - "59 normal 1"
+  - "60 normal 1"
+  - "61 normal 1"
+  - "62 normal 1"
+  - "63 safe 100"
+  - "63 luck 50"
+  - "64 luck 50"
+  - "66 normal 16"
+#格式: <怪物ID> <类型> <几率 > ID请看最上面
+#例子: - "54 normal 10"
+#干掉ID为54的怪物,有10%的几率掉落普通强化石
+#类型: normal luck safe vip (大小写不敏感)
+
+style:
+  #强化风格设置
+  color: "&3&l"
+  #一级
+  a: "●"
+  #五级
+  b: "○"
+#无等级
+level:
+  #全服通知的最低等级
+  boardlevel: 5
+  #超过多少级丢失
+  boomlevel: 5
+#淬炼部分
+cuilian:
+  #使用默认的力量
+  UsingDefaultPower: true
+  #超过多少级丢失
+  boomlevel: 5
+  #最高等级
+  maxlevel: 100
+  #到达多少星开始提示
+  noticelevel: 20
+  #多少星之后可以使用粒子特效
+  suitEffectlevel: 5
+  #移星花费
+  moveLevelUse: 1
+  style:
+    #一星
+    a: "★"
+    #五星
+    b: "☆"
+UsingDefaultPower: true
+power:
+  arms:
+    - damage
+    - bloodSuck
+    - experience
+  helmet:
+    - defense
+    - experience
+  chestplate:
+    - defense
+    - reboundDamage
+    - experience
+  leggings:
+    - defense
+    - experience
+  boots:
+    - defense
+    - jump
+    - experience
+local:
+  arms:
+    - hand
+  helmet:
+    - bag
+  chestplate:
+    - bag
+  leggings:
+    - bag
+  boots:
+    - bag
+items:
+  arms:
+    - GOLD_SWORD
+    - IRON_SWORD
+    - WOOD_SWORD
+    - STONE_SWORD
+    - BOW
+    - DIAMOND_SWORD
+  helmet:
+    - CHAINMAIL_HELMET
+    - GOLD_HELMET
+    - IRON_HELMET
+    - DIAMOND_HELMET
+  chestplate:
+    - CHAINMAIL_CHESTPLATE
+    - GOLD_CHESTPLATE
+    - IRON_CHESTPLATE
+    - DIAMOND_CHESTPLATE
+  leggings:
+    - CHAINMAIL_LEGGINGS
+    - GOLD_LEGGINGS
+    - IRON_LEGGINGS
+    - DIAMOND_LEGGINGS
+  boots:
+    - CHAINMAIL_BOOTS
+    - GOLD_BOOTS
+    - IRON_BOOTS
+    - DIAMOND_BOOTS

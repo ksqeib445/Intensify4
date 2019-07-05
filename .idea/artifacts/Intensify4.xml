@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Intensify4">
+    <output-path>$PROJECT_DIR$/../out/</output-path>
+    <root id="archive" name="Intensify4.jar">
+      <element id="module-output" name="Intensify4" />
+    </root>
+  </artifact>
+</component>

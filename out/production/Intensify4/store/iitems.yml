@@ -1,0 +1,49 @@
+normal:
+  DisplayName: "§a§l普通强化石"
+  Type: EMERALD
+  #基础成功率
+  add: 0
+  #  是否安全
+  isasafe: false
+  Lore:
+    - §a【功能】
+    - §6▸ §7提升武器/装备等级
+    - §6▸ §c强化超过 5 级失败会使装备丢失
+    - §a【用法】
+    - §c 放到熔炉,燃烧武器/装备
+luck:
+  DisplayName: "§5§l幸运强化石"
+  Type: EMERALD
+  add: 8
+  isasafe: false
+  Lore:
+    - §a【功能】
+    - §6▸ §7提升武器/装备等级
+    - §6• §3提高 15% 强化几率
+    - §6▸ §c强化超过 5 级失败会使装备丢失
+    - §a【用法】
+    - §c 放到熔炉,燃烧武器/装备
+safe:
+  DisplayName: "§9§l安全强化石"
+  Type: EMERALD
+  add: 3
+  isasafe: true
+  Lore:
+    - §a【功能】
+    - §6▸ §7提升武器/装备等级
+    - §6• §3提高 6% 强化几率
+    - §6• §36级后强化失败武器不会丢失
+    - §a【用法】
+    - §c 放到熔炉,燃烧武器/装备
+vip:
+  DisplayName: "§a§lMVP§7/§6§lMVP+§b§l会员强化石"
+  Type: EMERALD
+  add: 5
+  isasafe: true
+  Lore:
+    - §a【功能】
+    - §6▸ §a§lMVP§7/§6§lMVP+§7会员专用
+    - §6• §3提高 10% 几率
+    - §6• §36级后强化失败武器不会损坏
+    - §a【用法】
+    - §c 放到熔炉,燃烧武器/装备
