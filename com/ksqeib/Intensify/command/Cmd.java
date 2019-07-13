@@ -1,6 +1,8 @@
 package ksqeib.Intensify.command;
 
+import ksqeib.Intensify.enchant.Qh;
 import ksqeib.Intensify.main.Intensify;
+import ksqeib.Intensify.store.Istone;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -64,6 +66,16 @@ public class Cmd extends Command {
                         }
                     }
 
+                    break;
+                case "do":
+                    if (args.length >= 3) {
+                        boolean isSafe = Boolean.parseBoolean(args[2]);
+                        int chance = Integer.parseInt(args[1]);
+                        Intensify.dataer.player.put(p.hashCode(), p.getUniqueId());
+                        p.getInventory().setItemInMainHand(Qh.qh(p.hashCode(),p.getInventory().getItemInMainHand(),new Istone(null,null,chance,isSafe)));
+                    } else {
+                        Intensify.um.getTip().getDnS(p,"subwrong",null);
+                    }
                     break;
                 case "reload":
                     if (Intensify.um.getPerm().isp(cms, "." + args[0])) {

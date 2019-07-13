@@ -32,7 +32,13 @@ public class Qhtime implements Listener {
         ItemStack qh = new ItemStack(source);
         flag = Isqh.isCanQhWeapon(source);
         if (flag){
-            qh = Qh.qh(hash, source,false,Intensify.dataer.getStonebyId(id));
+            try {
+                qh = Qh.qh(hash, source,Intensify.dataer.getStonebyId(id));
+            }catch (Exception ex){
+                ex.printStackTrace();
+                qh=source;
+                Bukkit.getLogger().warning("在强化过程中发生严重问题");
+            }
             Intensify.dataer.fuelItem.remove(hash);
             //强化出结果
             if (qh != null) {

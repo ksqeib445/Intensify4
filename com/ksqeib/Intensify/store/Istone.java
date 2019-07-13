@@ -14,6 +14,7 @@ public class Istone {
         this.id = id;
         this.add = add;
         this.issafe = issafe;
+//        Bukkit.getLogger().warning(issafe+"");
     }
 
     public ItemStack getStone() {

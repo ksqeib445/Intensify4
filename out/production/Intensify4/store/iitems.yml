@@ -4,7 +4,7 @@ normal:
   #基础成功率
   add: 0
   #  是否安全
-  isasafe: false
+  issafer: false
   Lore:
     - §a【功能】
     - §6▸ §7提升武器/装备等级
@@ -15,7 +15,7 @@ luck:
   DisplayName: "§5§l幸运强化石"
   Type: EMERALD
   add: 8
-  isasafe: false
+  issafer: false
   Lore:
     - §a【功能】
     - §6▸ §7提升武器/装备等级
@@ -27,7 +27,7 @@ safe:
   DisplayName: "§9§l安全强化石"
   Type: EMERALD
   add: 3
-  isasafe: true
+  issafer: true
   Lore:
     - §a【功能】
     - §6▸ §7提升武器/装备等级
@@ -39,7 +39,7 @@ vip:
   DisplayName: "§a§lMVP§7/§6§lMVP+§b§l会员强化石"
   Type: EMERALD
   add: 5
-  isasafe: true
+  issafer: true
   Lore:
     - §a【功能】
     - §6▸ §a§lMVP§7/§6§lMVP+§7会员专用
