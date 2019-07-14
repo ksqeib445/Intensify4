@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Stone {
-    public ItemStack cuiLianStone;
+    public static String NBTID = "CuilianStone";
+    private ItemStack cuiLianStone;
     public double basePro;
     public double sharpStar;
     public List<Integer> dropLevel = new ArrayList<>();
@@ -26,7 +27,7 @@ public class Stone {
     }
 
     public ItemStack getCuiLianStone() {
-        return cuiLianStone;
+        return new ItemStack(cuiLianStone);
     }
 
     public double getSharpStar() {

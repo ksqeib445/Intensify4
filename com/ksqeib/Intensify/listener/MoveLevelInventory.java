@@ -33,32 +33,20 @@ public class MoveLevelInventory implements Listener {
         inv.setItem(6, bariier);
         inv.setItem(7, bariier);
         inv.setItem(8, bariier);
-        if (NewAPI.getLelByNBT(inv.getItem(5)) != -1) {
-            ItemStack item = new ItemStack(Material.ANVIL);
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName("§a把左边装备所有等级移给右边装备");
-            List<String> lore = new ArrayList();
-            lore.add("§7该装备移等级需要：§a" + Dataer.instance.moveLevelUse);
-            lore.add("§7把左边装备所有等级移给右边装备。");
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-            inv.setItem(4, item);
-        } else {
-            ItemStack item = new ItemStack(Material.ANVIL);
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName("§a把左边装备所有等级移给右边装备");
-            List<String> lore = new ArrayList();
-            lore.add("§7把左边装备所有等级移给右边装备。");
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-            inv.setItem(4, item);
-        }
+        ItemStack item = new ItemStack(Material.ANVIL);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§a把左边装备所有等级移给右边装备");
+        List<String> lore = new ArrayList();
+        lore.add("§7该装备移等级需要：§a" + Dataer.instance.moveLevelUse);
+        lore.add("§7把左边装备所有等级移给右边装备。");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(4, item);
     }
 
     @EventHandler
     public void InventoryClickEvent(InventoryClickEvent e) {
-        Inventory inv = e.getInventory();
-        Player p = (Player) e.getWhoClicked();
+        Inventory inv = e.getClickedInventory();
         if (inv == null) {
             return;
         }
@@ -69,26 +57,22 @@ public class MoveLevelInventory implements Listener {
             check(inv);
             if (e.getRawSlot() <= 8) {
                 int slot = e.getRawSlot();
-                if ((slot <= 8 && slot >= 0) && slot != 3 && slot != 5 && slot != 4) {
-                    return;
-                } else if (slot == 4) {
-                    if (inv.getItem(3) == null || inv.getItem(5) == null || NewAPI.getLelByNBT(inv.getItem(3)) == -1) {
+                if(slot!=3&&slot!=5){
+                    e.setCancelled(true);
+                }
+                if (slot == 4) {
+                    if (inv.getItem(3) == null || inv.getItem(5) == null || NewAPI.getLelByNBT(inv.getItem(3)) <= 0) {
                         return;
                     }
-                    int h = NewAPI.getLelByNBT(inv.getItem(5)) + NewAPI.getLelByNBT(inv.getItem(3)) + 1;
-                    if (h > Intensify.dataer.cuilianmax) {
-                        h = Intensify.dataer.cuilianmax;
-                    }
-                    Integer moveLevel = NewAPI.getLelByNBT(inv.getItem(3)) + 1 -  Dataer.instance.moveLevelUse;
+                    Integer moveLevel = NewAPI.getLelByNBT(inv.getItem(3)) - Dataer.instance.moveLevelUse;
                     int newLevel;
                     if (NewAPI.getLelByNBT(inv.getItem(5)) + moveLevel > Intensify.dataer.cuilianmax) {
                         newLevel = (Intensify.dataer.cuilianmax);
                     } else {
                         newLevel = (NewAPI.getLelByNBT(inv.getItem(5)) + moveLevel);
                     }
-                    inv.setItem(3, NewAPI.setItemCuiLian(inv.getItem(3), -1, p));
-                    inv.setItem(5, NewAPI.setItemCuiLian(inv.getItem(5), newLevel, p));
-                    e.setCancelled(true);
+                    inv.setItem(3, NewAPI.setItemCuiLian(inv.getItem(3), -1));
+                    inv.setItem(5, NewAPI.setItemCuiLian(inv.getItem(5), newLevel));
                 }
             }
         }

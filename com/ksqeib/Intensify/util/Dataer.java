@@ -33,6 +33,8 @@ public class Dataer {
     public HashMap<String, Istone> istones = new HashMap();
     public HashMap<String, Integer> qhlevel = new HashMap();
     public List<Double> qhchance;
+
+
     //淬炼
 
 
@@ -41,6 +43,7 @@ public class Dataer {
     public HashMap<Location, ItemStack> furnaceFuelMap = new HashMap<>();
     //Manager
     public List<Stone> customCuilianStoneList = new ArrayList<>();
+    public HashMap<String,Stone> customCuilianStoneMap = new HashMap<>();
     public List<Material> itemList = new ArrayList<>();
     public SuitEffect NULLSuitEffect;
     public Wings NULLWings;
@@ -67,6 +70,7 @@ public class Dataer {
     public int cuilianmax = 0;
     public int cuiliannotice = 5;
     public int csuitEffectlevel = 5;
+    public List<Double> clchance;
     public int moveLevelUse = 1;
     public String r1, r5;
 
@@ -138,6 +142,10 @@ public class Dataer {
         r1 = config.getString("cuilian.style.a");
         r5 = config.getString("cuilian.style.b");
         usingDefaultPower = config.getBoolean("cuilian.UsingDefaultPower");
+
+        clchance = config.getDoubleList("cuilian.levelandchance");
+        cuilianmax=clchance.size()+1;
+
     }
 
     public void loadStones() {
@@ -157,7 +165,9 @@ public class Dataer {
             id.setDisplayName(name);
             id.setLore(lore);
             item.setItemMeta(id);
+            item = Intensify.um.getMulNBT().addNBTdata(item, Stone.NBTID, i);
             Stone s = new Stone(item, i, dropLevel, riseLevel, basePro, sharpStar);
+            customCuilianStoneMap.put(i,s);
             customCuilianStoneList.add(s);
         }
     }
@@ -179,6 +189,14 @@ public class Dataer {
             item = Intensify.um.getMulNBT().addNBTdata(item, Istone.NBTID, i);
             Istone s = new Istone(item, i, add, issafer);
             istones.put(i, s);
+        }
+    }
+
+    public Stone getCuilianStone(String id){
+        if(customCuilianStoneMap.keySet().contains(id)){
+            return customCuilianStoneMap.get(id);
+        }else {
+            return NULLStone;
         }
     }
 

@@ -1,35 +1,30 @@
 arms:
-  damage: 5
-  bloodSuck: 1
-  jump: 1
-  defense: 4
-  reboundDamage: 1
-  experience: 5
+  damage: 0.5
+  bloodSuck: 0.1
+  defense: 0.4
+  reboundDamage: 0.1
+  experience: 0.5
 helmet:
-  damage: 1
-  bloodSuck: 1
-  jump: 1
-  defense: 4
-  reboundDamage: 1
-  experience: 5
+  damage: 0.1
+  bloodSuck: 0.1
+  defense: 0.4
+  reboundDamage: 0.1
+  experience: 0.5
 chestplate:
-  damage: 5
-  bloodSuck: 1
-  jump: 1
-  defense: 4
-  reboundDamage: 1
-  experience: 5
+  damage: 0.5
+  bloodSuck: 0.1
+  defense: 0.4
+  reboundDamage: 0.1
+  experience: 0.5
 leggings:
-  damage: 5
-  bloodSuck: 1
-  jump: 1
-  defense: 4
-  reboundDamage: 1
-  experience: 5
+  damage: 0.5
+  bloodSuck: 0.1
+  defense: 0.4
+  reboundDamage: 0.1
+  experience: 0.5
 boots:
-  damage: 5
-  bloodSuck: 1
-  jump: 1
-  defense: 4
-  reboundDamage: 1
-  experience: 5
+  damage: 0.5
+  bloodSuck: 0.1
+  defense: 0.4
+  reboundDamage: 0.1
+  experience: 0.5

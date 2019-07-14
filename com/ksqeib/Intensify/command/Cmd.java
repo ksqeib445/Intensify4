@@ -9,16 +9,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-
 public class Cmd extends Command {
     public Cmd(String name) {
         super(name);
     }
 
-    public Cmd(String name, String doc, String usage, List<String> alies) {
-        super(name, doc, usage, alies);
-    }
 
     @Override
     public boolean execute(CommandSender cms, String label, String[] args) {// 指令!

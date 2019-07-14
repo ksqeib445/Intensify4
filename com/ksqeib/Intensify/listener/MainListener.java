@@ -10,11 +10,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.HashMap;
@@ -58,11 +55,11 @@ public class MainListener implements Listener {
                     } else {
                         Damagerr.setHealth(NewAPI.getMaxHealth(Damagerr));
                     }
-                    if (NewAPI.getReboundDamage(list2) * damage / 100 > 0) {
-                        if (canPVP(Damagerr, entity)) {
-                            Damagerr.damage(NewAPI.getReboundDamage(list2) * damage / 100);
-                        }
-                    }
+//                    if (NewAPI.getReboundDamage(list2) * damage / 100 > 0) {
+//                        if (canPVP(Damagerr, entity)) {
+//                            Damagerr.damage(NewAPI.getReboundDamage(list2) * damage / 100);
+//                        }
+//                    }
                     damage -= NewAPI.getDefense(list2);
                     try {
                         NewAPI.removeDurability(list2);
@@ -76,11 +73,11 @@ public class MainListener implements Listener {
                     LivingEntity p = (LivingEntity) ps;
                     LivingEntity entity = (LivingEntity) e.getEntity();
                     List<ItemStack> list2 = NewAPI.addAll(NewAPI.getItemInHand(entity), NewAPI.getItemInOffHand(entity), entity.getEquipment().getHelmet(), entity.getEquipment().getChestplate(), entity.getEquipment().getLeggings(), entity.getEquipment().getBoots());
-                    if (NewAPI.getReboundDamage(list2) * damage / 100 > 0) {
-                        if (canPVP(p, entity)) {
-                            p.damage(NewAPI.getReboundDamage(list2) * damage / 100);
-                        }
-                    }
+//                    if (NewAPI.getReboundDamage(list2) * damage / 100 > 0) {
+//                        if (canPVP(p, entity)) {
+//                            p.damage(NewAPI.getReboundDamage(list2) * damage / 100);
+//                        }
+//                    }
                     if (XxEntityIdMap.get(psw.getEntityId()) != null && ShEntityIdMap.get(psw.getEntityId()) != null) {
                         damage += XxEntityIdMap.get(psw.getEntityId()) * damage / 100;
                         damage += ShEntityIdMap.get(psw.getEntityId());
@@ -116,17 +113,6 @@ public class MainListener implements Listener {
 
     //优化完成
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void PlayerMoveEvent(PlayerMoveEvent e) {
-        Player p = e.getPlayer();
-        int level = 0;
-        level = NewAPI.getJump(NewAPI.addAll(NewAPI.getItemInHand(p), NewAPI.getItemInOffHand(p), p.getEquipment().getHelmet(), p.getEquipment().getChestplate(), p.getEquipment().getLeggings(), p.getEquipment().getBoots()));
-        if (level != 0) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 60, level));
-        }
-    }
-
-    //优化完成
-    @EventHandler(priority = EventPriority.HIGHEST)
     public void PlayerExpChangeEvent(PlayerExpChangeEvent e) {
         int value = e.getAmount();
         Player p = e.getPlayer();
@@ -150,7 +136,4 @@ public class MainListener implements Listener {
         }
     }
 
-    public boolean canPVP(LivingEntity a, LivingEntity b) {
-        return false;
-    }
 }

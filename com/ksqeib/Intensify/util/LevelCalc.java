@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LevelCalc {
-    HashMap<String, Double> arm;
+    HashMap<String, Double> arms;
     HashMap<String, Double> helmet;
     HashMap<String, Double> chestplate;
     HashMap<String, Double> leggings;
@@ -20,7 +20,7 @@ public class LevelCalc {
     private  final String unit[] = {"星","拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"};
     public ArrayList<String> types = new ArrayList<String>() {
         {
-            add("arm");
+            add("arms");
             add("helmet");
             add("chestplate");
             add("leggings");
@@ -31,7 +31,6 @@ public class LevelCalc {
         {
             add("damage");
             add("bloodSuck");
-            add("jump");
             add("defense");
             add("reboundDamage");
             add("experience");
@@ -47,8 +46,8 @@ public class LevelCalc {
         if (!types.contains(type)) return 0;
         if (!sectypes.contains(sectype)) return 0;
         switch (type) {
-            case "arm":
-                return arm.get(sectype) * lel;
+            case "arms":
+                return arms.get(sectype) * lel;
             case "helmet":
                 return helmet.get(sectype) * lel;
             case "chestplate":
@@ -62,7 +61,7 @@ public class LevelCalc {
     }
 
     public void init(FileConfiguration yml) {
-        arm = loada("arm", yml);
+        arms = loada("arms", yml);
         helmet = loada("helmet", yml);
         chestplate = loada("chestplate", yml);
         leggings = loada("leggings", yml);
@@ -81,8 +80,7 @@ public class LevelCalc {
         ArrayList<String> lo=new ArrayList<>();
         int r1 =i%5;
         int r5 =(i-r1)/5;
-        lo.addAll(Intensify.um.getTip().getMessageList("lore_head"));
-        String out="";
+        String out=Intensify.um.getTip().getMessageList("lore_head").get(0);
         while(r5>1){
             r5--;
             out+=Intensify.dataer.r5;
@@ -92,8 +90,7 @@ public class LevelCalc {
             out+=Intensify.dataer.r1;
         }
         out+=int2big(i);
-        lo.add(out);
-        lo.addAll(Intensify.um.getTip().getMessageList("lore_end"));
+        lo.add(out+Intensify.um.getTip().getMessageList("lore_end").get(0));
         return lo;
     }
 
@@ -111,6 +108,6 @@ public class LevelCalc {
     }
 
     public double calcStoneProvavility(Stone stone,int lel){
-        return stone.getBasePro()-stone.getSharpStar()*lel;
+        return Intensify.dataer.clchance.get(lel)+stone.getBasePro()-stone.getSharpStar()*lel;
     }
 }

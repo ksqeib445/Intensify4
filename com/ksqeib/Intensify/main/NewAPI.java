@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.ksqeib.ksapi.util.Io.getRandom;
+import static ksqeib.Intensify.main.Intensify.um;
 
 public class NewAPI {
 
@@ -25,6 +26,7 @@ public class NewAPI {
     public static MulNBT mulNBT = Intensify.um.getMulNBT();
     public static LevelCalc levelCalc = Intensify.levelCalc;
     public static Tip tip = Intensify.um.getTip();
+    public static String lorestart="cuilianlorestart";
 
     public NewAPI(Plugin p) {
         plugin = p;
@@ -60,26 +62,26 @@ public class NewAPI {
     public static ItemStack cuilian(ItemStack cls, ItemStack item, Player p) {
         if (cls != null && item != null && p != null && Intensify.dataer.itemList.contains(item.getType())) {
             int level = getLelByNBT(item);
-            Stone stone = getStoneByItem(cls);
+            Stone stone = getStoneByNBT(cls);
             int dx = getRandom(stone.dropLevel.get(0), stone.dropLevel.get(1)), sx = stone.riseLevel;
             boolean flag = Intensify.um.getIo().rand(levelCalc.calcStoneProvavility(stone, level), 100);
             if (flag) {
                 level += sx;
                 String afteradd = levelCalc.makeLelStr(level).get(0);
-                item = setItemCuiLian(item, level, p);
-                tip.send("CAN_CUILIAN_PROMPT", p, new String[]{afteradd});
-                if (level + sx >= 5) {
-                    tip.broadcastMessage("ALL_SERVER_PROMPT", new String[]{p.getDisplayName(), cls.getItemMeta().getDisplayName(), afteradd});
+                item = setItemCuiLian(item, level);
+                tip.getDnS(p, "CAN_CUILIAN_PROMPT", new String[]{afteradd});
+                if (level >= 5) {
+                    tip.broadcastMessage(tip.getMessage("ALL_SERVER_PROMPT"), new String[]{p.getDisplayName(), cls.getItemMeta().getDisplayName(), afteradd});
                 }
             } else {
                 level -= dx;
                 if (level >= 0) {
-                    item = setItemCuiLian(item, level, p);
+                    item = setItemCuiLian(item, level);
                     String afteradd = levelCalc.makeLelStr(level).get(0);
-                    tip.send("CUILIAN_OVER", p, new String[]{afteradd,String.valueOf(dx)});
+                    tip.getDnS(p, "CUILIAN_OVER", new String[]{afteradd, String.valueOf(dx)});
                 } else {
-                    item = setItemCuiLian(item, -1, p);
-                    tip.send("CUILIAN_OVER_ZERO", p, new String[]{String.valueOf(dx)});
+                    item = setItemCuiLian(item, -1);
+                    tip.getDnS(p, "CUILIAN_OVER_ZERO", new String[]{String.valueOf(dx)});
                 }
 
             }
@@ -87,31 +89,64 @@ public class NewAPI {
         return item;
     }
 
-    public static ItemStack setItemCuiLian(ItemStack item, int level, Player p) {
+    public static ItemStack setItemCuiLian(ItemStack item, int level) {
+        item=new ItemStack(addlorenbt(item));
+        String nbt=mulNBT.getNBTdataStr(item,lorestart);
+        int start= Integer.valueOf(nbt);
+        List<String> lore=getLore(item);
         if (Intensify.dataer.itemList.contains(item.getType())
                 && level != -1) {
-            List<String> lore;
-            lore = NewAPI.cleanCuiLian(item);
-            lore.addAll(tip.getMessageList("UNDER_LINE"));
-            lore.addAll(levelCalc.makeLelStr(level));
-            lore.addAll(getLore(getListStringByType(item.getType()), level, item.getType()));
-            if (lore.isEmpty()) {
-                lore.add("");
+//            List<String> lore = NewAPI.cleanCuiLian(item);
+
+            ArrayList<String> willadd=new ArrayList<>();
+            willadd.addAll(tip.getMessageList("UNDER_LINE"));
+            willadd.addAll(levelCalc.makeLelStr(level));
+            willadd.addAll(getLore(getListStringByType(item.getType()), level, item.getType()));
+
+
+            if(lore==null)lore=willadd;
+            if(lore.size()<start+willadd.size()){
+                lore.addAll(willadd);
+            }else {
+                for(int i=0;i<willadd.size();i++){
+                    lore.set(start+i,willadd.get(i));
+                }
             }
+
             ItemMeta meta = item.getItemMeta();
             meta.setLore(lore);
             item.setItemMeta(meta);
+            item = mulNBT.addNBTdata(item, LevelCalc.cln, String.valueOf(level));
+
         } else if (level == -1) {
-            List<String> lore = NewAPI.cleanCuiLian(item);
+            lore = NewAPI.cleanCuiLian(item);
             ItemMeta meta = item.getItemMeta();
             meta.setLore(lore);
             item.setItemMeta(meta);
+            item = mulNBT.addNBTdata(item, LevelCalc.cln, String.valueOf(0));
         }
         return item;
     }
 
+    public static ItemStack addlorenbt(ItemStack itemStack){
+        int will=0;
+        String nbt=mulNBT.getNBTdataStr(itemStack,lorestart);
+        if(nbt==null){
+            if(getLore(itemStack)!=null){
+                will= getLore(itemStack).size();
+            }
+            return um.getMulNBT().addNBTdata(itemStack,lorestart,String.valueOf(will));
+        }
+        return itemStack;
+    }
+
+    public static List<String> getLore(ItemStack item) {
+        List<String> lore = item.getItemMeta().getLore();
+        return lore;
+    }
+
     public static List<String> cleanCuiLian(ItemStack item) {
-        List<String> lore = null;
+        List<String> lore = new ArrayList<>();
         if (item.getItemMeta().hasLore()) {
             lore = item.getItemMeta().getLore();
         }
@@ -136,17 +171,17 @@ public class NewAPI {
         return lore;
     }
 
+    public static int getLelByNBT(ItemStack i) {
+        String n = mulNBT.getNBTdataStr(i, LevelCalc.cln);
+        if (n == null) return 0;
+        return Integer.parseInt(mulNBT.getNBTdataStr(i, LevelCalc.cln));
+    }
 
-    public static Stone getStoneByItem(ItemStack i) {
+    public static Stone getStoneByNBT(ItemStack i) {
         if (i != null) {
-            if (i.hasItemMeta()) {
-                if (i.getItemMeta().hasLore()) {
-                    for (Stone Key : Intensify.dataer.customCuilianStoneList) {
-                        if (Key.cuiLianStone.getItemMeta().equals(i.getItemMeta())) {
-                            return Key;
-                        }
-                    }
-                }
+            String id = getNBTID(i);
+            if (id != null) {
+                return Intensify.dataer.getCuilianStone(id);
             }
         }
         return Intensify.dataer.NULLStone;
@@ -218,7 +253,7 @@ public class NewAPI {
                     for (String s : levelCalc.getLevelString(sectype)) {
                         double doubled = levelCalc.getLelDouble(fitype, sectype, level);
                         if (doubled != 0) {
-                            lore.add(tip.getMessage("FIRST") + s.replace("{1}", String.valueOf(doubled)));
+                            lore.add(tip.getMessage("FIRST") + s.replace("{0}", String.valueOf(doubled)));
                         }
                     }
                 }
@@ -238,26 +273,6 @@ public class NewAPI {
                             if (getLelByNBT(item) != -1) {
                                 if (getListStringByType(item.getType()).contains("experience")) {
                                     value += levelCalc.getLelDouble(getType(item.getType()), "experience", getLelByNBT(item));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return value;
-    }
-
-    public static int getJump(List<ItemStack> itemlist) {
-        int value = 0;
-        for (ItemStack item : itemlist) {
-            if (item != null) {
-                if (item.hasItemMeta()) {
-                    if (item.getItemMeta().hasLore()) {
-                        if (Intensify.dataer.itemList.contains(item.getType())) {
-                            if (getLelByNBT(item) != -1) {
-                                if (getListStringByType(item.getType()).contains("jump")) {
-                                    value += levelCalc.getLelDouble(getType(item.getType()), "jump", getLelByNBT(item));
                                 }
                             }
                         }
@@ -433,23 +448,27 @@ public class NewAPI {
         return item;
     }
 
-    public static int getLelByNBT(ItemStack i) {
-        String n = mulNBT.getNBTdataStr(i, LevelCalc.cln);
-        if (n == null) return -1;
-        return Integer.parseInt(mulNBT.getNBTdataStr(i, LevelCalc.cln));
-    }
 
-    public static boolean isStoneMapItemMetaHasItemMeta(ItemMeta meta) {
-        if (meta != null) {
-            for (Stone s : Intensify.dataer.customCuilianStoneList) {
-                if (s.cuiLianStone.hasItemMeta()) {
-                    if (s.cuiLianStone.getItemMeta().equals(meta)) {
-                        return true;
-                    }
-                }
-            }
+    public static boolean isCuilianStone(ItemStack item) {
+        if (item == null) {
+            return false;
+        }
+        if (!(item.hasItemMeta())) {
+            return false;
+        }
+        String id = getNBTID(item);
+        if (id == null) {
+            return false;
+        }
+        for (Stone stone : Intensify.dataer.customCuilianStoneList) {
+            if (stone.id.equals(id))
+                return true;
         }
         return false;
+    }
+
+    public static String getNBTID(ItemStack item) {
+        return Intensify.um.getMulNBT().getNBTdataStr(item, Stone.NBTID);
     }
 
     public static ItemStack getItemInHand(LivingEntity p) {

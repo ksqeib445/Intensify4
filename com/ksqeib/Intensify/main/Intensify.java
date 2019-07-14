@@ -6,6 +6,7 @@ import com.ksqeib.ksapi.util.UtilManager;
 import ksqeib.Intensify.Droper.BlockDrop;
 import ksqeib.Intensify.Droper.MobDrop;
 import ksqeib.Intensify.command.Cmd;
+import ksqeib.Intensify.command.CuiCmd;
 import ksqeib.Intensify.enchant.Enchan;
 import ksqeib.Intensify.listener.*;
 import ksqeib.Intensify.util.Dataer;
@@ -71,11 +72,13 @@ public class Intensify extends JavaPlugin {
             System.out.print("NewCustomCuiLian: 服务器版本获取失败，插件无法启动");
             this.setEnabled(false);
         }
-//        getServer().getPluginManager().registerEvents(new BListener(), this);
-//        getServer().getPluginManager().registerEvents(new MoveLevelInventory(), this);
-//        if (dataer.usingDefaultPower) {
-//            getServer().getPluginManager().registerEvents(new MainListener(), this);
-//        }
+        um.createHelper("cuilian", um.getIo().loadYamlFile("chelppage.yml", true));
+        getServer().getPluginManager().registerEvents(new BListener(), this);
+        getServer().getPluginManager().registerEvents(new MoveLevelInventory(), this);
+        if (dataer.usingDefaultPower) {
+            getServer().getPluginManager().registerEvents(new MainListener(), this);
+        }
+        Cmdregister.registercmd(this, new CuiCmd("cuilian"));
     }
 
     @Override

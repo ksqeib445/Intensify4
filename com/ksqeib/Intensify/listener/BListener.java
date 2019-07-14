@@ -54,12 +54,12 @@ public class BListener implements Listener {
     public void FurnaceBurnEvent(FurnaceBurnEvent e) {
         ItemStack fuel = e.getFuel();
         Furnace f = (Furnace) e.getBlock().getState();
-        if ((NewAPI.isStoneMapItemMetaHasItemMeta(fuel.getItemMeta()) && !Intensify.dataer.itemList.contains(f.getInventory().getSmelting().getType())) || (Intensify.dataer.itemList.contains(f.getInventory().getSmelting().getType()) && !NewAPI.isStoneMapItemMetaHasItemMeta(fuel.getItemMeta())) || NewAPI.getLelByNBT(f.getInventory().getSmelting()) + NewAPI.getStoneByItem(fuel).riseLevel > Dataer.instance.cuilianmax) {
-            e.setCancelled(true);
-            return;
-        }
-        if (NewAPI.isStoneMapItemMetaHasItemMeta(fuel.getItemMeta())) {
+        if (NewAPI.isCuilianStone(fuel)) {
             if (Intensify.dataer.itemList.contains(f.getInventory().getSmelting().getType())) {
+                if(NewAPI.getStoneByNBT(fuel).riseLevel+NewAPI.getLelByNBT(f.getInventory().getSmelting())>Intensify.dataer.cuilianmax){
+                    e.setCancelled(true);
+                    return;
+                }
                 Intensify.dataer.furnaceFuelMap.put(f.getLocation(), fuel);
                 e.setBurning(true);
                 e.setBurnTime(200);
@@ -75,14 +75,8 @@ public class BListener implements Listener {
         ItemStack smelt = e.getSource();
         Furnace f = (Furnace) e.getBlock().getState();
         ItemStack fuel = Intensify.dataer.furnaceFuelMap.get(f.getLocation());
-        if (!Intensify.dataer.furnaceFuelMap.containsKey(f.getLocation()) && Intensify.dataer.itemList.contains(smelt.getType())) {
-            e.setResult(smelt);
-            return;
-        }
-        if (!Intensify.dataer.furnaceFuelMap.containsKey(f.getLocation()) || !Intensify.dataer.itemList.contains(smelt.getType()) || fuel == null) {
-            return;
-        }
-        if (NewAPI.isStoneMapItemMetaHasItemMeta(fuel.getItemMeta()) && Intensify.dataer.furnaceUsingMap.get(f.getLocation()) != null) {
+        if(fuel==null)return;
+        if (NewAPI.isCuilianStone(fuel) && Intensify.dataer.furnaceUsingMap.get(f.getLocation()) != null) {
             Player p = Intensify.instance.getServer().getPlayer(Intensify.dataer.furnaceUsingMap.get(f.getLocation()));
             smelt.setAmount(1);
             smelt = NewAPI.cuilian(fuel, smelt, p);
