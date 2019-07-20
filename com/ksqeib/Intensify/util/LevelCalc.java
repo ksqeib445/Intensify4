@@ -17,6 +17,7 @@ public class LevelCalc {
 
     private  final String num[] = {"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
     private  final String fnum[] = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
+    private  final String hnum[] = {"蕶","噎","弍","彡","sī","㈤","⒍","㈦","仈","氿"};
     private  final String unit[] = {"星","拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"};
     public ArrayList<String> types = new ArrayList<String>() {
         {
@@ -98,7 +99,7 @@ public class LevelCalc {
         String dst = "";
         int count = 0;
         while (src > 0) {
-            dst = (num[src % 10] + unit[count]) + dst;
+            dst = (fnum[src % 10] + unit[count]) + dst;
             src = src / 10;
             count++;
         }

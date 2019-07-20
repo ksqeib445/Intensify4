@@ -175,9 +175,9 @@ cuilian:
   moveLevelUse: 1
   style:
     #一星
-    a: "★"
+    a: "✩"
     #五星
-    b: "☆"
+    b: "✯"
 UsingDefaultPower: true
 #加成项目
 power:
