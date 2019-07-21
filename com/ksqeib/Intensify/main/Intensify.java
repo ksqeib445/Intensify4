@@ -1,14 +1,13 @@
 package ksqeib.Intensify.main;
 
-import com.ksqeib.ksapi.KsAPI;
 import com.ksqeib.ksapi.command.Cmdregister;
 import com.ksqeib.ksapi.util.UtilManager;
 import ksqeib.Intensify.Droper.BlockDrop;
 import ksqeib.Intensify.Droper.MobDrop;
 import ksqeib.Intensify.command.Cmd;
-import ksqeib.Intensify.command.CuiCmd;
 import ksqeib.Intensify.enchant.Enchan;
-import ksqeib.Intensify.listener.*;
+import ksqeib.Intensify.listener.Events;
+import ksqeib.Intensify.listener.Qhtime;
 import ksqeib.Intensify.util.Dataer;
 import ksqeib.Intensify.util.LevelCalc;
 import org.bukkit.Bukkit;
@@ -64,21 +63,21 @@ public class Intensify extends JavaPlugin {
         um.getIo().loadaConfig("config",true);
         dataer.init(um.getIo().getaConfig("config"));
         soul();
-        levelCalc.init(um.getIo().getaConfig(storepath + "/cuilianlevelup"));
-//        cuilian
-        try {
-            ServerVersion = KsAPI.getServerVersionType();
-        } catch (NoSuchMethodException ex) {
-            System.out.print("NewCustomCuiLian: 服务器版本获取失败，插件无法启动");
-            this.setEnabled(false);
-        }
-        um.createHelper("cuilian", um.getIo().loadYamlFile("chelppage.yml", true));
-        getServer().getPluginManager().registerEvents(new BListener(), this);
-        getServer().getPluginManager().registerEvents(new MoveLevelInventory(), this);
-        if (dataer.usingDefaultPower) {
-            getServer().getPluginManager().registerEvents(new MainListener(), this);
-        }
-        Cmdregister.registercmd(this, new CuiCmd("cuilian"));
+//        levelCalc.init(um.getIo().getaConfig(storepath + "/cuilianlevelup"));
+////        cuilian
+//        try {
+//            ServerVersion = KsAPI.getServerVersionType();
+//        } catch (NoSuchMethodException ex) {
+//            System.out.print("NewCustomCuiLian: 服务器版本获取失败，插件无法启动");
+//            this.setEnabled(false);
+//        }
+//        um.createHelper("cuilian", um.getIo().loadYamlFile("chelppage.yml", true));
+//        getServer().getPluginManager().registerEvents(new BListener(), this);
+//        getServer().getPluginManager().registerEvents(new MoveLevelInventory(), this);
+//        if (dataer.usingDefaultPower) {
+//            getServer().getPluginManager().registerEvents(new MainListener(), this);
+//        }
+//        Cmdregister.registercmd(this, new CuiCmd("cuilian"));
     }
 
     @Override

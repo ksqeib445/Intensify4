@@ -46,7 +46,7 @@ public class MoveLevelInventory implements Listener {
 
     @EventHandler
     public void InventoryClickEvent(InventoryClickEvent e) {
-        Inventory inv = e.getClickedInventory();
+        Inventory inv = e.getInventory();
         if (inv == null) {
             return;
         }

@@ -17,7 +17,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Torch" level="project" />
     <orderEntry type="library" name="ksAPI" level="project" />
+    <orderEntry type="library" name="craftbukkit-1.12.2" level="project" />
   </component>
 </module>
