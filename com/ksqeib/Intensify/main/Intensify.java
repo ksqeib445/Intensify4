@@ -9,7 +9,6 @@ import ksqeib.Intensify.enchant.Enchan;
 import ksqeib.Intensify.listener.Events;
 import ksqeib.Intensify.listener.Qhtime;
 import ksqeib.Intensify.util.Dataer;
-import ksqeib.Intensify.util.LevelCalc;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.FurnaceRecipe;
@@ -24,7 +23,6 @@ public class Intensify extends JavaPlugin {
     // 构造需要
     public static UtilManager um;
     //其他构造
-    public static LevelCalc levelCalc;
     public static Enchan enchan;
     public static Intensify instance;
     public static Dataer dataer;
@@ -43,7 +41,6 @@ public class Intensify extends JavaPlugin {
         enchan = new Enchan(this);
         um = new UtilManager(this);
         dataer = new Dataer();
-        levelCalc=new LevelCalc();
         um.createio(false);
         um.createitemsr();
         um.createtip(true,"message.yml");
@@ -63,21 +60,6 @@ public class Intensify extends JavaPlugin {
         um.getIo().loadaConfig("config",true);
         dataer.init(um.getIo().getaConfig("config"));
         soul();
-//        levelCalc.init(um.getIo().getaConfig(storepath + "/cuilianlevelup"));
-////        cuilian
-//        try {
-//            ServerVersion = KsAPI.getServerVersionType();
-//        } catch (NoSuchMethodException ex) {
-//            System.out.print("NewCustomCuiLian: 服务器版本获取失败，插件无法启动");
-//            this.setEnabled(false);
-//        }
-//        um.createHelper("cuilian", um.getIo().loadYamlFile("chelppage.yml", true));
-//        getServer().getPluginManager().registerEvents(new BListener(), this);
-//        getServer().getPluginManager().registerEvents(new MoveLevelInventory(), this);
-//        if (dataer.usingDefaultPower) {
-//            getServer().getPluginManager().registerEvents(new MainListener(), this);
-//        }
-//        Cmdregister.registercmd(this, new CuiCmd("cuilian"));
     }
 
     @Override
@@ -85,18 +67,14 @@ public class Intensify extends JavaPlugin {
         um.getTip().getDnS(Bukkit.getConsoleSender(), "disable", null);
     }
 
-    @SuppressWarnings({"rawtypes", "unused"})
     public void reload() {
         um.getIo().reload();
         dataer.clearAll();
         dataer.init(um.getIo().getaConfig("config"));
-        levelCalc.init(um.getIo().getaConfig(storepath + "/cuilianlevelup"));
-        Iterator localIterator = um.getIo().getaConfig("config").getConfigurationSection("id.items").getKeys(false).iterator();
         soul();
     }
 
     public void soul() {
-        @SuppressWarnings("rawtypes")
         Iterator localIterator = um.getIo().getaConfig("config").getConfigurationSection("id.items").getKeys(false).iterator();
         while (localIterator.hasNext()) {
             String i = (String) localIterator.next();
