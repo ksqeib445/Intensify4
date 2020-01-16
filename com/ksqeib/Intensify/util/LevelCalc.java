@@ -1,5 +1,7 @@
 package ksqeib.Intensify.util;
 
+import ksqeib.Intensify.enums.LocType;
+import ksqeib.Intensify.enums.Sectype;
 import ksqeib.Intensify.main.Intensify;
 import ksqeib.Intensify.store.Stone;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -7,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LevelCalc {
     public static String cln = "cuilel";
@@ -14,65 +17,34 @@ public class LevelCalc {
     private final String[] fnum = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
     private final String[] hnum = {"蕶", "噎", "弍", "彡", "sī", "㈤", "⒍", "㈦", "仈", "氿"};
     private final String[] unit = {"星", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"};
-    public ArrayList<String> types = new ArrayList<String>() {
-        {
-            add("arms");
-            add("helmet");
-            add("chestplate");
-            add("leggings");
-            add("boots");
-        }
-    };
-    public ArrayList<String> sectypes = new ArrayList<String>() {
-        {
-            add("damage");
-            add("bloodSuck");
-            add("defense");
-            add("reboundDamage");
-            add("experience");
-        }
-    };
+    ConcurrentHashMap<LocType, HashMap<Sectype, Double>> loadedtypeadd = new ConcurrentHashMap<>();
     HashMap<String, Double> arms;
     HashMap<String, Double> helmet;
     HashMap<String, Double> chestplate;
     HashMap<String, Double> leggings;
     HashMap<String, Double> boots;
 
-    public List<String> getLevelString(String sectype) {
-        if (!sectypes.contains(sectype)) return null;
+    public List<String> getLevelString(Sectype sectype) {
+        if (sectype == null) return null;
         return Intensify.um.getTip().getMessageList(sectype + "_LORE");
     }
 
-    public double getLelDouble(String type, String sectype, int lel) {
-        if (!types.contains(type)) return 0;
-        if (!sectypes.contains(sectype)) return 0;
-        switch (type) {
-            case "arms":
-                return arms.get(sectype) * lel;
-            case "helmet":
-                return helmet.get(sectype) * lel;
-            case "chestplate":
-                return chestplate.get(sectype) * lel;
-            case "leggings":
-                return leggings.get(sectype) * lel;
-            case "boots":
-                return boots.get(sectype) * lel;
-        }
-        return 0;
+    public double getLelDouble(LocType type, Sectype sectype, int lel) {
+        if (type == null || sectype == null) return 0;
+        Double get = loadedtypeadd.get(type).get(sectype);
+        return get * lel;
     }
 
     public void init(FileConfiguration yml) {
-        arms = loada("arms", yml);
-        helmet = loada("helmet", yml);
-        chestplate = loada("chestplate", yml);
-        leggings = loada("leggings", yml);
-        boots = loada("boots", yml);
+        for (LocType locType : LocType.values()) {
+            loadedtypeadd.put(locType, loada(locType, yml));
+        }
     }
 
-    private HashMap<String, Double> loada(String name, FileConfiguration yml) {
-        HashMap<String, Double> hash = new HashMap<String, Double>();
-        for (String sectype : sectypes) {
-            hash.put(sectype, yml.getDouble(name + "." + sectype));
+    private HashMap<Sectype, Double> loada(LocType locType, FileConfiguration yml) {
+        HashMap<Sectype, Double> hash = new HashMap<>();
+        for (Sectype sectype : Sectype.values()) {
+            hash.put(sectype, yml.getDouble(locType + "." + sectype));
         }
         return hash;
     }

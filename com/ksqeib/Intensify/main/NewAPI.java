@@ -3,6 +3,8 @@ package ksqeib.Intensify.main;
 import com.ksqeib.ksapi.KsAPI;
 import com.ksqeib.ksapi.util.MulNBT;
 import com.ksqeib.ksapi.util.Tip;
+import ksqeib.Intensify.enums.LocType;
+import ksqeib.Intensify.enums.Sectype;
 import ksqeib.Intensify.store.Stone;
 import ksqeib.Intensify.util.LevelCalc;
 import org.bukkit.Material;
@@ -206,25 +208,6 @@ public class NewAPI {
         return null;
     }
 
-    public static String getType(Material itemid) {
-        if (Intensify.dataer.arms.contains(itemid)) {
-            return "arms";
-        }
-        if (Intensify.dataer.boots.contains(itemid)) {
-            return "boots";
-        }
-        if (Intensify.dataer.chestplate.contains(itemid)) {
-            return "chestplate";
-        }
-        if (Intensify.dataer.leggings.contains(itemid)) {
-            return "leggings";
-        }
-        if (Intensify.dataer.helmet.contains(itemid)) {
-            return "helmet";
-        }
-        return "";
-    }
-
     public static List<String> getCuiLianTypeForLocal(Material itemid) {
         if (Intensify.dataer.arms.contains(itemid)) {
             return Intensify.dataer.localArms;
@@ -247,8 +230,8 @@ public class NewAPI {
     public static List<String> getLore(List<String> powerlist, int level, Material itemid) {
         List<String> lore = new ArrayList<>();
         for (String str : powerlist) {
-            String fitype = getType(itemid);
-            for (String sectype : levelCalc.sectypes) {
+            LocType fitype = LocType.getType(itemid);
+            for (Sectype sectype : Sectype.values()) {
                 if (str.equals(sectype)) {
                     for (String s : levelCalc.getLevelString(sectype)) {
                         double doubled = levelCalc.getLelDouble(fitype, sectype, level);
@@ -263,7 +246,7 @@ public class NewAPI {
         return lore;
     }
 
-    public static Double getExperience(List<ItemStack> itemlist) {
+    public static Double getAddLevel(List<ItemStack> itemlist, Sectype sec) {
         Double value = 0D;
         for (ItemStack item : itemlist) {
             if (item != null) {
@@ -271,8 +254,8 @@ public class NewAPI {
                     if (item.getItemMeta().hasLore()) {
                         if (Intensify.dataer.itemList.contains(item.getType())) {
                             if (getLelByNBT(item) != -1) {
-                                if (getListStringByType(item.getType()).contains("experience")) {
-                                    value += levelCalc.getLelDouble(getType(item.getType()), "experience", getLelByNBT(item));
+                                if (getListStringByType(item.getType()).contains(sec.toString())) {
+                                    value += levelCalc.getLelDouble(LocType.getType(item.getType()), sec, getLelByNBT(item));
                                 }
                             }
                         }
@@ -283,167 +266,22 @@ public class NewAPI {
         return value;
     }
 
-    public static Double getDamage(List<ItemStack> itemlist) {
-        Double value = 0D;
-        for (ItemStack item : itemlist) {
-            if (item != null) {
-                if (item.hasItemMeta()) {
-                    if (item.getItemMeta().hasLore()) {
-                        if (Intensify.dataer.itemList.contains(item.getType())) {
-                            if (getLelByNBT(item) != -1) {
-                                if (getListStringByType(item.getType()).contains("damage")) {
-                                    value += levelCalc.getLelDouble(getType(item.getType()), "damage", getLelByNBT(item));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return value;
-    }
-
-    public static Double getBloodSuck(List<ItemStack> itemlist) {
-        Double value = 0D;
-        for (ItemStack item : itemlist) {
-            if (item != null) {
-                if (item.hasItemMeta()) {
-                    if (item.getItemMeta().hasLore()) {
-                        if (Intensify.dataer.itemList.contains(item.getType())) {
-                            if (getLelByNBT(item) != -1) {
-                                if (getListStringByType(item.getType()).contains("bloodSuck")) {
-                                    value += levelCalc.getLelDouble(getType(item.getType()), "bloodSuck", getLelByNBT(item));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return value;
-    }
-
-    public static Double getDefense(List<ItemStack> itemlist) {
-        Double value = 0D;
-        for (ItemStack item : itemlist) {
-            if (item != null) {
-                if (item.hasItemMeta()) {
-                    if (item.getItemMeta().hasLore()) {
-                        if (Intensify.dataer.itemList.contains(item.getType())) {
-                            if (getLelByNBT(item) != -1) {
-                                if (getListStringByType(item.getType()).contains("defense")) {
-                                    value += levelCalc.getLelDouble(getType(item.getType()), "defense", getLelByNBT(item));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return value;
-    }
-
-    public static Double getReboundDamage(List<ItemStack> itemlist) {
-        Double value = 0D;
-        for (ItemStack item : itemlist) {
-            if (item != null) {
-                if (item.hasItemMeta()) {
-                    if (item.getItemMeta().hasLore()) {
-                        if (Intensify.dataer.itemList.contains(item.getType())) {
-                            if (getLelByNBT(item) != -1) {
-                                if (getListStringByType(item.getType()).contains("reboundDamage")) {
-                                    value += levelCalc.getLelDouble(getType(item.getType()), "reboundDamage", getLelByNBT(item));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return value;
-    }
-
-    public static List<ItemStack> addAll(ItemStack i1, ItemStack i6, ItemStack i2, ItemStack i3, ItemStack i4, ItemStack i5) {
+    public static List<ItemStack> addAll(ItemStack... i1) {
         List<ItemStack> item = new ArrayList<>();
-        if (i1 != null) {
-            if (i1.hasItemMeta()) {
-                if (i1.getItemMeta().hasLore()) {
-                    if (Intensify.dataer.itemList.contains(i1.getType())) {
-                        if (NewAPI.getLelByNBT(i1) != -1) {
-                            if (getCuiLianTypeForLocal(i1.getType()).contains("hand")) {
-                                item.add(i1);
-                            }
-                        }
+        for (ItemStack imk : i1) {
+            if (imk == null) continue;
+            if (imk.getType() == Material.AIR) continue;
+            if (!imk.hasItemMeta()) continue;
+            if (!imk.getItemMeta().hasLore()) continue;
+            if (Intensify.dataer.itemList.contains(imk.getType())) {
+                if (NewAPI.getLelByNBT(imk) != -1) {
+                    List<String> fol = getCuiLianTypeForLocal(imk.getType());
+                    if (fol.contains("hand") || fol.contains("bag")) {
+                        item.add(imk);
                     }
                 }
             }
-        }
-        if (Intensify.ServerVersion == 3) {
-            if (i6 != null) {
-                if (i6.hasItemMeta()) {
-                    if (i6.getItemMeta().hasLore()) {
-                        if (Intensify.dataer.itemList.contains(i6.getType())) {
-                            if (NewAPI.getLelByNBT(i6) != -1) {
-                                if (getCuiLianTypeForLocal(i6.getType()).contains("hand")) {
-                                    item.add(i6);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (i2 != null) {
-            if (i2.hasItemMeta()) {
-                if (i2.getItemMeta().hasLore()) {
-                    if (Intensify.dataer.itemList.contains(i2.getType())) {
-                        if (NewAPI.getLelByNBT(i2) != -1) {
-                            if (getCuiLianTypeForLocal(i2.getType()).contains("bag")) {
-                                item.add(i2);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (i3 != null) {
-            if (i3.hasItemMeta()) {
-                if (i3.getItemMeta().hasLore()) {
-                    if (Intensify.dataer.itemList.contains(i3.getType())) {
-                        if (NewAPI.getLelByNBT(i3) != -1) {
-                            if (getCuiLianTypeForLocal(i3.getType()).contains("bag")) {
-                                item.add(i3);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (i4 != null) {
-            if (i4.hasItemMeta()) {
-                if (i4.getItemMeta().hasLore()) {
-                    if (Intensify.dataer.itemList.contains(i4.getType())) {
-                        if (NewAPI.getLelByNBT(i4) != -1) {
-                            if (getCuiLianTypeForLocal(i4.getType()).contains("bag")) {
-                                item.add(i4);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (i5 != null) {
-            if (i5.hasItemMeta()) {
-                if (i5.getItemMeta().hasLore()) {
-                    if (Intensify.dataer.itemList.contains(i5.getType())) {
-                        if (NewAPI.getLelByNBT(i5) != -1) {
-                            if (getCuiLianTypeForLocal(i5.getType()).contains("bag")) {
-                                item.add(i5);
-                            }
-                        }
-                    }
-                }
-            }
+
         }
         return item;
     }

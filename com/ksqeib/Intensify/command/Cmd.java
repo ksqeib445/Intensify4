@@ -20,7 +20,7 @@ public class Cmd extends Command {
         //输入指令后
         if (args.length == 0) {
             //什么也没输入
-            Intensify.um.getHelper("qh").sendno(cms,label);
+            Intensify.um.getHelper("qh").sendno(cms, label);
         } else if (args.length > 0) {
             Player p = null;
             if (cms instanceof Player) {

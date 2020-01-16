@@ -1,5 +1,6 @@
 package ksqeib.Intensify.listener;
 
+import ksqeib.Intensify.enums.Sectype;
 import ksqeib.Intensify.main.NewAPI;
 import ksqeib.Intensify.util.Dataer;
 import org.bukkit.entity.*;
@@ -28,7 +29,7 @@ public class MainListener implements Listener {
         if ((e.getEntity() instanceof LivingEntity) && e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
             double damage = e.getDamage();
             LivingEntity le = (LivingEntity) e.getEntity();
-            damage -= NewAPI.getDefense(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots()));
+            damage -= NewAPI.getAddLevel(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots()), Sectype.defense);
             if (damage < 0) {
                 damage = 0;
             }
@@ -48,10 +49,11 @@ public class MainListener implements Listener {
                     LivingEntity entity = (LivingEntity) e.getEntity();
                     List<ItemStack> list1 = NewAPI.addAll(NewAPI.getItemInHand(Damagerr), NewAPI.getItemInOffHand(Damagerr), Damagerr.getEquipment().getHelmet(), Damagerr.getEquipment().getChestplate(), Damagerr.getEquipment().getLeggings(), Damagerr.getEquipment().getBoots());
                     List<ItemStack> list2 = NewAPI.addAll(NewAPI.getItemInHand(entity), NewAPI.getItemInOffHand(entity), entity.getEquipment().getHelmet(), entity.getEquipment().getChestplate(), entity.getEquipment().getLeggings(), entity.getEquipment().getBoots());
-                    damage += NewAPI.getBloodSuck(list1) * damage / 100;
-                    damage += NewAPI.getDamage(list1);
-                    if (Damagerr.getHealth() + NewAPI.getBloodSuck(list1) * damage / 100 < NewAPI.getMaxHealth(Damagerr)) {
-                        Damagerr.setHealth(Damagerr.getHealth() + NewAPI.getBloodSuck(list1) * damage / 100);
+                    double bs = NewAPI.getAddLevel(list1, Sectype.bloodSuck);
+                    damage += bs * damage / 100;
+                    damage += NewAPI.getAddLevel(list1, Sectype.damage);
+                    if (Damagerr.getHealth() + bs * damage / 100 < NewAPI.getMaxHealth(Damagerr)) {
+                        Damagerr.setHealth(Damagerr.getHealth() + bs * damage / 100);
                     } else {
                         Damagerr.setHealth(NewAPI.getMaxHealth(Damagerr));
                     }
@@ -60,7 +62,7 @@ public class MainListener implements Listener {
 //                            Damagerr.damage(NewAPI.getReboundDamage(list2) * damage / 100);
 //                        }
 //                    }
-                    damage -= NewAPI.getDefense(list2);
+                    damage -= NewAPI.getAddLevel(list2, Sectype.defense);
                     try {
                         NewAPI.removeDurability(list2);
                     } catch (NoSuchMethodError ee) {
@@ -87,7 +89,7 @@ public class MainListener implements Listener {
                             p.setHealth(NewAPI.getMaxHealth(p));
                         }
                     }
-                    damage -= NewAPI.getDefense(list2);
+                    damage -= NewAPI.getAddLevel(list2, Sectype.defense);
                     try {
                         NewAPI.removeDurability(list2);
                     } catch (NoSuchMethodError ee) {
@@ -108,8 +110,8 @@ public class MainListener implements Listener {
         ProjectileSource ps = psw.getShooter();
         if (!(ps instanceof LivingEntity)) return;
         LivingEntity le = (LivingEntity) ps;
-        ShEntityIdMap.put(psw.getEntityId(), NewAPI.getDamage(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots())));
-        XxEntityIdMap.put(psw.getEntityId(), NewAPI.getBloodSuck(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots())));
+        ShEntityIdMap.put(psw.getEntityId(), NewAPI.getAddLevel(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots()), Sectype.damage));
+        XxEntityIdMap.put(psw.getEntityId(), NewAPI.getAddLevel(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots()), Sectype.bloodSuck));
     }
 
     //优化完成
@@ -117,7 +119,7 @@ public class MainListener implements Listener {
     public void PlayerExpChangeEvent(PlayerExpChangeEvent e) {
         int value = e.getAmount();
         Player p = e.getPlayer();
-        Double i = NewAPI.getExperience(NewAPI.addAll(NewAPI.getItemInHand(p), NewAPI.getItemInOffHand(p), p.getInventory().getHelmet(), p.getInventory().getChestplate(), p.getInventory().getLeggings(), p.getInventory().getBoots()));
+        Double i = NewAPI.getAddLevel(NewAPI.addAll(NewAPI.getItemInHand(p), NewAPI.getItemInOffHand(p), p.getInventory().getHelmet(), p.getInventory().getChestplate(), p.getInventory().getLeggings(), p.getInventory().getBoots()), Sectype.experience);
         int jy = 0;
         if (i != 0) {
             jy = (int) (value * (100 + i) / 100);
