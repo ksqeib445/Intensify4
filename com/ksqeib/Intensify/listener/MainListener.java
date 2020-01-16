@@ -120,13 +120,8 @@ public class MainListener implements Listener {
         int value = e.getAmount();
         Player p = e.getPlayer();
         Double i = NewAPI.getAddLevel(NewAPI.getAddAll(p), Sectype.experience);
-        int jy = 0;
-        if (i != 0) {
-            jy = (int) (value * (100 + i) / 100);
-        } else {
-            return;
-        }
-        e.setAmount(jy);
+        if(i==0)return;
+        e.setAmount((int) (value * (100 + i) / 100));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

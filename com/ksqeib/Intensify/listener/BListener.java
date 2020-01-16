@@ -26,7 +26,7 @@ public class BListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void PlayerJoinEvent(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        List<ItemStack> items = NewAPI.addAll(NewAPI.getItemInHand(p), NewAPI.getItemInOffHand(p), p.getEquipment().getHelmet(), p.getEquipment().getChestplate(), p.getEquipment().getLeggings(), p.getEquipment().getBoots());
+        List<ItemStack> items = NewAPI.getAddAll(p);
         int minLevel = NewAPI.getMinLevel(items);
         if (minLevel != -1) {
             if (minLevel >= Dataer.instance.cuiliannotice) {
