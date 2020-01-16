@@ -29,7 +29,7 @@ public class MainListener implements Listener {
         if ((e.getEntity() instanceof LivingEntity) && e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
             double damage = e.getDamage();
             LivingEntity le = (LivingEntity) e.getEntity();
-            damage -= NewAPI.getAddLevel(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots()), Sectype.defense);
+            damage -= NewAPI.getAddLevel(NewAPI.getAddAll(le), Sectype.defense);
             if (damage < 0) {
                 damage = 0;
             }
@@ -40,22 +40,22 @@ public class MainListener implements Listener {
     //优化完成
     @EventHandler(priority = EventPriority.HIGHEST)
     public void EntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
-        Entity Damager = e.getDamager();
+        Entity damager = e.getDamager();
         double damage = e.getDamage();
-        if (((Damager instanceof Damageable) || (Damager instanceof Projectile)) && (e.getEntity() instanceof Damageable)) {
-            if (Damager instanceof Damageable) {
-                if ((e.getEntity() instanceof LivingEntity) && (Damager instanceof LivingEntity)) {
-                    LivingEntity Damagerr = (LivingEntity) Damager;
+        if (((damager instanceof Damageable) || (damager instanceof Projectile)) && (e.getEntity() instanceof Damageable)) {
+            if (damager instanceof Damageable) {
+                if ((e.getEntity() instanceof LivingEntity) && (damager instanceof LivingEntity)) {
+                    LivingEntity damagerr = (LivingEntity) damager;
                     LivingEntity entity = (LivingEntity) e.getEntity();
-                    List<ItemStack> list1 = NewAPI.addAll(NewAPI.getItemInHand(Damagerr), NewAPI.getItemInOffHand(Damagerr), Damagerr.getEquipment().getHelmet(), Damagerr.getEquipment().getChestplate(), Damagerr.getEquipment().getLeggings(), Damagerr.getEquipment().getBoots());
-                    List<ItemStack> list2 = NewAPI.addAll(NewAPI.getItemInHand(entity), NewAPI.getItemInOffHand(entity), entity.getEquipment().getHelmet(), entity.getEquipment().getChestplate(), entity.getEquipment().getLeggings(), entity.getEquipment().getBoots());
+                    List<ItemStack> list1 =NewAPI.getAddAll(damagerr);
+                    List<ItemStack> list2 = NewAPI.getAddAll(entity);
                     double bs = NewAPI.getAddLevel(list1, Sectype.bloodSuck);
                     damage += bs * damage / 100;
                     damage += NewAPI.getAddLevel(list1, Sectype.damage);
-                    if (Damagerr.getHealth() + bs * damage / 100 < NewAPI.getMaxHealth(Damagerr)) {
-                        Damagerr.setHealth(Damagerr.getHealth() + bs * damage / 100);
+                    if (damagerr.getHealth() + bs * damage / 100 < NewAPI.getMaxHealth(damagerr)) {
+                        damagerr.setHealth(damagerr.getHealth() + bs * damage / 100);
                     } else {
-                        Damagerr.setHealth(NewAPI.getMaxHealth(Damagerr));
+                        damagerr.setHealth(NewAPI.getMaxHealth(damagerr));
                     }
 //                    if (NewAPI.getReboundDamage(list2) * damage / 100 > 0) {
 //                        if (canPVP(Damagerr, entity)) {
@@ -69,12 +69,12 @@ public class MainListener implements Listener {
                     }
                 }
             } else {
-                Projectile psw = (Projectile) Damager;
+                Projectile psw = (Projectile) damager;
                 ProjectileSource ps = psw.getShooter();
                 if ((ps instanceof LivingEntity) && (e.getEntity() instanceof LivingEntity)) {
                     LivingEntity p = (LivingEntity) ps;
                     LivingEntity entity = (LivingEntity) e.getEntity();
-                    List<ItemStack> list2 = NewAPI.addAll(NewAPI.getItemInHand(entity), NewAPI.getItemInOffHand(entity), entity.getEquipment().getHelmet(), entity.getEquipment().getChestplate(), entity.getEquipment().getLeggings(), entity.getEquipment().getBoots());
+                    List<ItemStack> list2 = NewAPI.getAddAll(entity);
 //                    if (NewAPI.getReboundDamage(list2) * damage / 100 > 0) {
 //                        if (canPVP(p, entity)) {
 //                            p.damage(NewAPI.getReboundDamage(list2) * damage / 100);
@@ -110,8 +110,8 @@ public class MainListener implements Listener {
         ProjectileSource ps = psw.getShooter();
         if (!(ps instanceof LivingEntity)) return;
         LivingEntity le = (LivingEntity) ps;
-        ShEntityIdMap.put(psw.getEntityId(), NewAPI.getAddLevel(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots()), Sectype.damage));
-        XxEntityIdMap.put(psw.getEntityId(), NewAPI.getAddLevel(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots()), Sectype.bloodSuck));
+        ShEntityIdMap.put(psw.getEntityId(), NewAPI.getAddLevel(NewAPI.getAddAll(le), Sectype.damage));
+        XxEntityIdMap.put(psw.getEntityId(), NewAPI.getAddLevel(NewAPI.getAddAll(le), Sectype.bloodSuck));
     }
 
     //优化完成
@@ -119,7 +119,7 @@ public class MainListener implements Listener {
     public void PlayerExpChangeEvent(PlayerExpChangeEvent e) {
         int value = e.getAmount();
         Player p = e.getPlayer();
-        Double i = NewAPI.getAddLevel(NewAPI.addAll(NewAPI.getItemInHand(p), NewAPI.getItemInOffHand(p), p.getInventory().getHelmet(), p.getInventory().getChestplate(), p.getInventory().getLeggings(), p.getInventory().getBoots()), Sectype.experience);
+        Double i = NewAPI.getAddLevel(NewAPI.getAddAll(p), Sectype.experience);
         int jy = 0;
         if (i != 0) {
             jy = (int) (value * (100 + i) / 100);

@@ -266,7 +266,11 @@ public class NewAPI {
         return value;
     }
 
-    public static List<ItemStack> addAll(ItemStack... i1) {
+    public static List<ItemStack> getAddAll(LivingEntity le){
+        return addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots());
+    }
+
+    private static List<ItemStack> addAll(ItemStack... i1) {
         List<ItemStack> item = new ArrayList<>();
         for (ItemStack imk : i1) {
             if (imk == null) continue;
