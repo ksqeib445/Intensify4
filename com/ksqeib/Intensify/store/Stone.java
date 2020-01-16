@@ -7,19 +7,19 @@ import java.util.List;
 
 public class Stone {
     public static String NBTID = "CuilianStone";
-    private ItemStack cuiLianStone;
     public double basePro;
     public double sharpStar;
     public List<Integer> dropLevel = new ArrayList<>();
     public String id;
     public int riseLevel = 0;
+    private ItemStack cuiLianStone;
 
-    public Stone(ItemStack cuiLianStone, String id, List<Integer> dropLevel, int riseLevel,double basePro,double sharpStar) {
+    public Stone(ItemStack cuiLianStone, String id, List<Integer> dropLevel, int riseLevel, double basePro, double sharpStar) {
         this.cuiLianStone = cuiLianStone;
         this.id = id;
         this.dropLevel = dropLevel;
         this.riseLevel = riseLevel;
-        this.sharpStar=sharpStar;
+        this.sharpStar = sharpStar;
     }
 
     public double getBasePro() {

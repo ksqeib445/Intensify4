@@ -15,7 +15,8 @@ import static ksqeib.Intensify.main.Intensify.um;
 
 public class Qh {
     @SuppressWarnings("deprecation")
-    public static String lorestart="intensifylorestart";
+    public static String lorestart = "intensifylorestart";
+
     public static ItemStack qh(int hash, ItemStack in, Istone stone) {
         Player p = Bukkit.getPlayer(Intensify.dataer.player.get(hash));
         int id = in.getTypeId();
@@ -23,7 +24,7 @@ public class Qh {
         if (item == null) {
             return new ItemStack(0);
         }
-        item=addlorenbt(item);
+        item = addlorenbt(item);
         // 创建
         Enchantment enc = Intensify.enchan.getEnchan(um.getIo().getaConfig("config").getInt("id.items." + id));
         // 等级
@@ -60,7 +61,7 @@ public class Qh {
         if (item != null && item != new ItemStack(0)) {
             item.addUnsafeEnchantment(enc, level);
             ItemMeta im = item.getItemMeta();
-            im.setLore(setLore(item, level,Integer.valueOf(um.getMulNBT().getNBTdataStr(item,lorestart))));
+            im.setLore(setLore(item, level, Integer.valueOf(um.getMulNBT().getNBTdataStr(item, lorestart))));
 //            im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE,ItemFlag.HIDE_ENCHANTS,ItemFlag.HIDE_ATTRIBUTES);
             item.setItemMeta(im);
             return item;
@@ -73,20 +74,21 @@ public class Qh {
         List<String> lore = item.getItemMeta().getLore();
         return lore;
     }
-    public static ItemStack addlorenbt(ItemStack itemStack){
-        int will=0;
-        String nbt=um.getMulNBT().getNBTdataStr(itemStack,lorestart);
-        if(nbt==null){
-            if(getLore(itemStack)!=null){
-                will= getLore(itemStack).size();
+
+    public static ItemStack addlorenbt(ItemStack itemStack) {
+        int will = 0;
+        String nbt = um.getMulNBT().getNBTdataStr(itemStack, lorestart);
+        if (nbt == null) {
+            if (getLore(itemStack) != null) {
+                will = getLore(itemStack).size();
             }
-           return um.getMulNBT().addNBTdata(itemStack,lorestart,String.valueOf(will));
+            return um.getMulNBT().addNBTdata(itemStack, lorestart, String.valueOf(will));
         }
         return itemStack;
     }
 
 
-    public static List<String> setLore(ItemStack item, int level,int lorestart) {
+    public static List<String> setLore(ItemStack item, int level, int lorestart) {
         List<String> lore = getLore(item);
         if (lore == null) {
             // 如果是第一次强化
@@ -99,25 +101,25 @@ public class Qh {
         }
         if (level != Intensify.dataer.maxlevel) {
             //不是最高级
-            if(lore.size()<lorestart+3){
+            if (lore.size() < lorestart + 3) {
                 lore.add(um.getTip().getMessage("qhxx"));
                 lore.add(um.getTip().getMessage("qhlel").replace("{0}", String.valueOf(level)));
                 lore.add(style(level));
-            }else{
+            } else {
                 lore.set(lorestart, um.getTip().getMessage("qhxx"));
-                lore.set(lorestart+1, um.getTip().getMessage("qhlel").replace("{0}", String.valueOf(level)));
-                lore.set(lorestart+2, style(level));
+                lore.set(lorestart + 1, um.getTip().getMessage("qhlel").replace("{0}", String.valueOf(level)));
+                lore.set(lorestart + 2, style(level));
             }
         } else {
             //是最高级
-            if(lore.size()<lorestart+3){
+            if (lore.size() < lorestart + 3) {
                 lore.add(um.getTip().getMessage("qhxx"));
                 lore.add(um.getTip().getMessage("maxqh"));
                 lore.add(style(level));
-            }else{
+            } else {
                 lore.set(lorestart, um.getTip().getMessage("qhxx"));
-                lore.set(lorestart+1, um.getTip().getMessage("maxqh"));
-                lore.set(lorestart+2, style(level));
+                lore.set(lorestart + 1, um.getTip().getMessage("maxqh"));
+                lore.set(lorestart + 2, style(level));
             }
         }
         return lore;
@@ -143,14 +145,14 @@ public class Qh {
 //            str = str + Intensify.dataer.cg;
 //        }
 
-        int r1 =level%5;
-        int r5 =(level-r1)/5;
-        while(r5>0){
-            str+=Intensify.dataer.sb;
+        int r1 = level % 5;
+        int r5 = (level - r1) / 5;
+        while (r5 > 0) {
+            str += Intensify.dataer.sb;
             r5--;
         }
-        while(r1>0){
-            str+=Intensify.dataer.cg;
+        while (r1 > 0) {
+            str += Intensify.dataer.cg;
             r1--;
         }
         return str;

@@ -67,9 +67,9 @@ public class Cmd extends Command {
                         boolean isSafe = Boolean.parseBoolean(args[2]);
                         int chance = Integer.parseInt(args[1]);
                         Intensify.dataer.player.put(p.hashCode(), p.getUniqueId());
-                        p.getInventory().setItemInMainHand(Qh.qh(p.hashCode(),p.getInventory().getItemInMainHand(),new Istone(null,null,chance,isSafe)));
+                        p.getInventory().setItemInMainHand(Qh.qh(p.hashCode(), p.getInventory().getItemInMainHand(), new Istone(null, null, chance, isSafe)));
                     } else {
-                        Intensify.um.getTip().getDnS(p,"subwrong",null);
+                        Intensify.um.getTip().getDnS(p, "subwrong", null);
                     }
                     break;
                 case "reload":

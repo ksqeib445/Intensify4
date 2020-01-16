@@ -22,11 +22,11 @@ import static ksqeib.Intensify.main.Intensify.um;
 
 public class NewAPI {
 
-    Plugin plugin;
     public static MulNBT mulNBT = Intensify.um.getMulNBT();
     public static LevelCalc levelCalc = Intensify.levelCalc;
     public static Tip tip = Intensify.um.getTip();
-    public static String lorestart="cuilianlorestart";
+    public static String lorestart = "cuilianlorestart";
+    Plugin plugin;
 
     public NewAPI(Plugin p) {
         plugin = p;
@@ -90,26 +90,26 @@ public class NewAPI {
     }
 
     public static ItemStack setItemCuiLian(ItemStack item, int level) {
-        item=new ItemStack(addlorenbt(item));
-        String nbt=mulNBT.getNBTdataStr(item,lorestart);
-        int start= Integer.valueOf(nbt);
-        List<String> lore=getLore(item);
+        item = new ItemStack(addlorenbt(item));
+        String nbt = mulNBT.getNBTdataStr(item, lorestart);
+        int start = Integer.valueOf(nbt);
+        List<String> lore = getLore(item);
         if (Intensify.dataer.itemList.contains(item.getType())
                 && level != -1) {
 //            List<String> lore = NewAPI.cleanCuiLian(item);
 
-            ArrayList<String> willadd=new ArrayList<>();
+            ArrayList<String> willadd = new ArrayList<>();
             willadd.addAll(tip.getMessageList("UNDER_LINE"));
             willadd.addAll(levelCalc.makeLelStr(level));
             willadd.addAll(getLore(getListStringByType(item.getType()), level, item.getType()));
 
 
-            if(lore==null)lore=willadd;
-            if(lore.size()<start+willadd.size()){
+            if (lore == null) lore = willadd;
+            if (lore.size() < start + willadd.size()) {
                 lore.addAll(willadd);
-            }else {
-                for(int i=0;i<willadd.size();i++){
-                    lore.set(start+i,willadd.get(i));
+            } else {
+                for (int i = 0; i < willadd.size(); i++) {
+                    lore.set(start + i, willadd.get(i));
                 }
             }
 
@@ -128,14 +128,14 @@ public class NewAPI {
         return item;
     }
 
-    public static ItemStack addlorenbt(ItemStack itemStack){
-        int will=0;
-        String nbt=mulNBT.getNBTdataStr(itemStack,lorestart);
-        if(nbt==null){
-            if(getLore(itemStack)!=null){
-                will= getLore(itemStack).size();
+    public static ItemStack addlorenbt(ItemStack itemStack) {
+        int will = 0;
+        String nbt = mulNBT.getNBTdataStr(itemStack, lorestart);
+        if (nbt == null) {
+            if (getLore(itemStack) != null) {
+                will = getLore(itemStack).size();
             }
-            return um.getMulNBT().addNBTdata(itemStack,lorestart,String.valueOf(will));
+            return um.getMulNBT().addNBTdata(itemStack, lorestart, String.valueOf(will));
         }
         return itemStack;
     }
@@ -517,7 +517,6 @@ public class NewAPI {
         }
         return items;
     }
-
 
 
 }

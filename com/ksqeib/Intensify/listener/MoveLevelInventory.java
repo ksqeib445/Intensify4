@@ -57,7 +57,7 @@ public class MoveLevelInventory implements Listener {
             check(inv);
             if (e.getRawSlot() <= 8) {
                 int slot = e.getRawSlot();
-                if(slot!=3&&slot!=5){
+                if (slot != 3 && slot != 5) {
                     e.setCancelled(true);
                 }
                 if (slot == 4) {

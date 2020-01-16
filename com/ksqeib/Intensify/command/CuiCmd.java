@@ -21,7 +21,7 @@ public class CuiCmd extends Command {
             cms.sendMessage(Intensify.um.getHelper("cuilian").hY.getString("help.head"));
             cms.sendMessage(Intensify.um.getHelper("cuilian").hY.getString("help.start") + label + Intensify.um.getHelper("qh").hY.getString("help.help"));
             cms.sendMessage(Intensify.um.getHelper("cuilian").hY.getString("help.last"));
-        }else if (args.length > 0) {
+        } else if (args.length > 0) {
             Player p = null;
             if (cms instanceof Player) {
                 p = (Player) cms;
@@ -42,7 +42,7 @@ public class CuiCmd extends Command {
                     Intensify.um.getHelper("cuilian").HelpPage(cms, label, args);
                     break;
                 case "ov":
-                    if (!(cms instanceof Player)){
+                    if (!(cms instanceof Player)) {
 
                         cms.sendMessage("后台无法使用该命令");
                     }

@@ -56,7 +56,7 @@ public class BListener implements Listener {
         Furnace f = (Furnace) e.getBlock().getState();
         if (NewAPI.isCuilianStone(fuel)) {
             if (Intensify.dataer.itemList.contains(f.getInventory().getSmelting().getType())) {
-                if(NewAPI.getStoneByNBT(fuel).riseLevel+NewAPI.getLelByNBT(f.getInventory().getSmelting())>Intensify.dataer.cuilianmax){
+                if (NewAPI.getStoneByNBT(fuel).riseLevel + NewAPI.getLelByNBT(f.getInventory().getSmelting()) > Intensify.dataer.cuilianmax) {
                     e.setCancelled(true);
                     return;
                 }
@@ -75,7 +75,7 @@ public class BListener implements Listener {
         ItemStack smelt = e.getSource();
         Furnace f = (Furnace) e.getBlock().getState();
         ItemStack fuel = Intensify.dataer.furnaceFuelMap.get(f.getLocation());
-        if(fuel==null)return;
+        if (fuel == null) return;
         if (NewAPI.isCuilianStone(fuel) && Intensify.dataer.furnaceUsingMap.get(f.getLocation()) != null) {
             Player p = Intensify.instance.getServer().getPlayer(Intensify.dataer.furnaceUsingMap.get(f.getLocation()));
             smelt.setAmount(1);

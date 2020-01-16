@@ -44,10 +44,10 @@ public class Intensify extends JavaPlugin {
         enchan = new Enchan(this);
         um = new UtilManager(this);
         dataer = new Dataer();
-        levelCalc=new LevelCalc();
+        levelCalc = new LevelCalc();
         um.createio(false);
         um.createitemsr();
-        um.createtip(true,"message.yml");
+        um.createtip(true, "message.yml");
         um.createmulNBT();
         //注册
         um.createHelper("qh", um.getIo().loadYamlFile("helppage.yml", true));
@@ -61,7 +61,7 @@ public class Intensify extends JavaPlugin {
         //完全启动
         um.getIo().loadaConfig(storepath + "/cuilianlevelup", true);
         um.getIo().loadaConfig(storepath + "/iitems", true);
-        um.getIo().loadaConfig("config",true);
+        um.getIo().loadaConfig("config", true);
         dataer.init(um.getIo().getaConfig("config"));
         soul();
         levelCalc.init(um.getIo().getaConfig(storepath + "/cuilianlevelup"));

@@ -33,8 +33,8 @@ public class Events implements Listener {
             //假东西
             return;
         }
-        if (event.getInventory().getType() != InventoryType.WORKBENCH&&event.getInventory().getType()!=InventoryType.ANVIL&&event.getInventory().getType()!=InventoryType.BEACON
-        &&event.getInventory().getType() != InventoryType.MERCHANT) {
+        if (event.getInventory().getType() != InventoryType.WORKBENCH && event.getInventory().getType() != InventoryType.ANVIL && event.getInventory().getType() != InventoryType.BEACON
+                && event.getInventory().getType() != InventoryType.MERCHANT) {
             //如果不是熔炉或者工作台
             return;
         }
@@ -51,7 +51,7 @@ public class Events implements Listener {
         }
 //
         if ((event.getInventory().getType() == InventoryType.FURNACE) && ((Isqh.isqhStone(event.getCursor())) || (Isqh.isCanQhWeapon(event.getCursor()))) && (
-                (event.getSlotType() == InventoryType.SlotType.FUEL)|| (event.getSlotType() == InventoryType.SlotType.CRAFTING))) {
+                (event.getSlotType() == InventoryType.SlotType.FUEL) || (event.getSlotType() == InventoryType.SlotType.CRAFTING))) {
             ItemStack item = event.getCursor();
             ItemStack targetitem = event.getCurrentItem();
             event.setCursor(targetitem);
@@ -63,7 +63,7 @@ public class Events implements Listener {
     public boolean furnCheck(Furnace furn) {
         //来开熔炉的玩家
         UUID pu = Intensify.dataer.player.get(furn.getBlock().hashCode());
-        Player p= Bukkit.getPlayer(pu);
+        Player p = Bukkit.getPlayer(pu);
         ItemStack smelt = furn.getInventory().getSmelting();
         ItemStack fuel = furn.getInventory().getFuel();
         if (smelt.getEnchantmentLevel(Intensify.enchan.getEnchan(um.getIo().getaConfig("config").getInt("id.items." + smelt.getTypeId()))) >= Intensify.dataer.maxlevel) {

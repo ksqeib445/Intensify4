@@ -23,32 +23,32 @@ public class Qhtime implements Listener {
         int hash = e.getBlock().hashCode();
         //获取玩家
         Player p = Bukkit.getPlayer(Intensify.dataer.player.get(hash));
-        if(p==null)return;
+        if (p == null) return;
         //获取方块ID
         ItemStack source = e.getSource();
         //获取资源()上方物品
         String id = Intensify.dataer.fuelItem.get(hash);
-        if(id==null)return;
+        if (id == null) return;
         //获取燃料
-        if(source==null)return;
+        if (source == null) return;
         ItemStack qh = new ItemStack(source);
         flag = Isqh.isCanQhWeapon(source);
-        if (flag){
+        if (flag) {
             try {
-                qh = Qh.qh(hash, source,Intensify.dataer.getStonebyId(id));
-            }catch (Exception ex){
+                qh = Qh.qh(hash, source, Intensify.dataer.getStonebyId(id));
+            } catch (Exception ex) {
                 ex.printStackTrace();
-                qh=source;
+                qh = source;
                 Bukkit.getLogger().warning("在强化过程中发生严重问题");
             }
             Intensify.dataer.fuelItem.remove(hash);
             //强化出结果
             if (qh != null) {
-                if (p != null&&p.isOnline()){
+                if (p != null && p.isOnline()) {
                     p.playSound(p.getLocation(), Isqh.getAnvilSound(), 1.0F, 1.0F);
                     e.setResult(qh);
-                }else {
-                    e.getBlock().getWorld().dropItem(e.getBlock().getLocation(),qh);
+                } else {
+                    e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), qh);
                     e.setResult(new ItemStack(Material.AIR));
                 }
             }

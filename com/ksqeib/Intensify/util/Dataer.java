@@ -43,7 +43,7 @@ public class Dataer {
     public HashMap<Location, ItemStack> furnaceFuelMap = new HashMap<>();
     //Manager
     public List<Stone> customCuilianStoneList = new ArrayList<>();
-    public HashMap<String,Stone> customCuilianStoneMap = new HashMap<>();
+    public HashMap<String, Stone> customCuilianStoneMap = new HashMap<>();
     public List<Material> itemList = new ArrayList<>();
     public SuitEffect NULLSuitEffect;
     public Wings NULLWings;
@@ -144,7 +144,7 @@ public class Dataer {
         usingDefaultPower = config.getBoolean("cuilian.UsingDefaultPower");
 
         clchance = config.getDoubleList("cuilian.levelandchance");
-        cuilianmax=clchance.size()+1;
+        cuilianmax = clchance.size() + 1;
 
     }
 
@@ -167,7 +167,7 @@ public class Dataer {
             item.setItemMeta(id);
             item = Intensify.um.getMulNBT().addNBTdata(item, Stone.NBTID, i);
             Stone s = new Stone(item, i, dropLevel, riseLevel, basePro, sharpStar);
-            customCuilianStoneMap.put(i,s);
+            customCuilianStoneMap.put(i, s);
             customCuilianStoneList.add(s);
         }
     }
@@ -192,10 +192,10 @@ public class Dataer {
         }
     }
 
-    public Stone getCuilianStone(String id){
-        if(customCuilianStoneMap.keySet().contains(id)){
+    public Stone getCuilianStone(String id) {
+        if (customCuilianStoneMap.containsKey(id)) {
             return customCuilianStoneMap.get(id);
-        }else {
+        } else {
             return NULLStone;
         }
     }

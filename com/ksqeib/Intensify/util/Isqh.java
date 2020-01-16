@@ -27,11 +27,11 @@ public class Isqh {
         if (item == null) {
             return false;
         }
-        if(!(item.hasItemMeta())){
+        if (!(item.hasItemMeta())) {
             return false;
         }
-        String id=getNBTID(item);
-        if(id==null){
+        String id = getNBTID(item);
+        if (id == null) {
             return false;
         }
         for (String str : Intensify.dataer.istones.keySet()) {
@@ -40,9 +40,11 @@ public class Isqh {
         }
         return false;
     }
-    public static String getNBTID(ItemStack item){
+
+    public static String getNBTID(ItemStack item) {
         return Intensify.um.getMulNBT().getNBTdataStr(item, Istone.NBTID);
     }
+
     //是不是强化武器
     @SuppressWarnings({"rawtypes", "deprecation"})
     public static boolean isCanQhWeapon(ItemStack item) {

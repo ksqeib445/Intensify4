@@ -106,7 +106,7 @@ public class MainListener implements Listener {
     public void ProjectileLaunchEvent(ProjectileLaunchEvent e) {
         Projectile psw = e.getEntity();
         ProjectileSource ps = psw.getShooter();
-        if(!(ps instanceof LivingEntity))return;
+        if (!(ps instanceof LivingEntity)) return;
         LivingEntity le = (LivingEntity) ps;
         ShEntityIdMap.put(psw.getEntityId(), NewAPI.getDamage(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots())));
         XxEntityIdMap.put(psw.getEntityId(), NewAPI.getBloodSuck(NewAPI.addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots())));
