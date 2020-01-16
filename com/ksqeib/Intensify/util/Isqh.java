@@ -57,7 +57,6 @@ public class Isqh {
         while (it.hasNext()) {
             String i = (String) it.next();
             int a = Integer.parseInt(i);
-//	      Bukkit.getLogger().warning(item.getTypeId()+" "+a+" "+item.getAmount());
 
             if ((a == item.getTypeId()) && (item.getAmount() == 1)) {
                 //如果ID相同，并且只有一个

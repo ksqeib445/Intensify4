@@ -7,7 +7,6 @@ import ksqeib.Intensify.Droper.BlockDrop;
 import ksqeib.Intensify.Droper.MobDrop;
 import ksqeib.Intensify.command.Cmd;
 import ksqeib.Intensify.command.CuiCmd;
-import ksqeib.Intensify.enchant.Enchan;
 import ksqeib.Intensify.listener.*;
 import ksqeib.Intensify.util.Dataer;
 import ksqeib.Intensify.util.LevelCalc;
@@ -26,7 +25,6 @@ public class Intensify extends JavaPlugin {
     public static UtilManager um;
     //其他构造
     public static LevelCalc levelCalc;
-    public static Enchan enchan;
     public static Intensify instance;
     public static Dataer dataer;
     public static int ServerVersion = 0;
@@ -41,7 +39,6 @@ public class Intensify extends JavaPlugin {
     //关闭
 
     public void init() {
-        enchan = new Enchan(this);
         um = new UtilManager(this);
         dataer = new Dataer();
         levelCalc = new LevelCalc();

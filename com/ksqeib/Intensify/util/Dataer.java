@@ -4,8 +4,6 @@ import com.ksqeib.ksapi.util.Io;
 import ksqeib.Intensify.main.Intensify;
 import ksqeib.Intensify.store.Istone;
 import ksqeib.Intensify.store.Stone;
-import ksqeib.Intensify.store.SuitEffect;
-import ksqeib.Intensify.store.Wings;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -45,8 +43,6 @@ public class Dataer {
     public List<Stone> customCuilianStoneList = new ArrayList<>();
     public HashMap<String, Stone> customCuilianStoneMap = new HashMap<>();
     public List<Material> itemList = new ArrayList<>();
-    public SuitEffect NULLSuitEffect;
-    public Wings NULLWings;
     public Stone NULLStone;
     //    Main
     public List<Material> arms = new ArrayList<>();
@@ -94,9 +90,7 @@ public class Dataer {
         }
 //        淬炼
 
-        NULLWings = new Wings(null, 0, 0, 0);
         NULLStone = new Stone(new ItemStack(Material.AIR), "", new ArrayList<>(), 0, 0d, 0d);
-        NULLSuitEffect = new SuitEffect(new ArrayList<>(), 0);
         //1
         for (String str : config.getStringList("items.arms")) {
             arms.add(Material.getMaterial(str));
@@ -272,15 +266,5 @@ public class Dataer {
         localBoots.clear();
 
         customCuilianStoneList.clear();
-    }
-
-    private HashMap<String, ItemStack> getAll(FileConfiguration file) {
-        //读取配置
-        HashMap<String, ItemStack> hash = new HashMap<>();
-        for (String string : file.getValues(false).keySet()) {
-            //获取全部样式
-            hash.put(string.toLowerCase(), Intensify.um.getItemsr().rep(file.getItemStack(string), null));
-        }
-        return hash;
     }
 }

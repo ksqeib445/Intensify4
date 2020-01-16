@@ -26,7 +26,7 @@ public class Qh {
         }
         item = addlorenbt(item);
         // 创建
-        Enchantment enc = Intensify.enchan.getEnchan(um.getIo().getaConfig("config").getInt("id.items." + id));
+        Enchantment enc = Enchantment.getById(um.getIo().getaConfig("config").getInt("id.items." + id));
         // 等级
         int level = item.getEnchantmentLevel(enc);
         if (level == Intensify.dataer.maxlevel) {
@@ -61,8 +61,7 @@ public class Qh {
         if (item != null && item != new ItemStack(0)) {
             item.addUnsafeEnchantment(enc, level);
             ItemMeta im = item.getItemMeta();
-            im.setLore(setLore(item, level, Integer.valueOf(um.getMulNBT().getNBTdataStr(item, lorestart))));
-//            im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE,ItemFlag.HIDE_ENCHANTS,ItemFlag.HIDE_ATTRIBUTES);
+            im.setLore(setLore(item, level, Integer.parseInt(um.getMulNBT().getNBTdataStr(item, lorestart))));
             item.setItemMeta(im);
             return item;
         }
@@ -128,23 +127,6 @@ public class Qh {
 
     public static String style(int level) {
         String str = um.getIo().getaConfig("config").getString("style.color").replace("&", "§");
-//        if (level != (Intensify.dataer.maxlevel + 1)) {
-//            //如果不是满级
-//            for (int i = 0; i < level; i++) {
-//                //弄格子
-//                str = str + Intensify.dataer.cg;
-//            }
-//            for (int i = 0; i < Intensify.dataer.maxlevel - level; i++) {
-//                //满格子
-//                str = str + Intensify.dataer.sb;
-//            }
-//
-//            return str;
-//        }
-//        for (int i = 0; i < level; i++) {
-//            str = str + Intensify.dataer.cg;
-//        }
-
         int r1 = level % 5;
         int r5 = (level - r1) / 5;
         while (r5 > 0) {
