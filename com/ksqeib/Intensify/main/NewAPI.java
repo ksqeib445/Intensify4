@@ -71,19 +71,19 @@ public class NewAPI {
                 level += sx;
                 String afteradd = levelCalc.makeLelStr(level).get(0);
                 item = setItemCuiLian(item, level);
-                tip.getDnS(p, "CAN_CUILIAN_PROMPT", new String[]{afteradd});
+                tip.getDnS(p, "CAN_CUILIAN_PROMPT", afteradd);
                 if (level >= 5) {
-                    tip.broadcastMessage(tip.getMessage("ALL_SERVER_PROMPT"), new String[]{p.getDisplayName(), cls.getItemMeta().getDisplayName(), afteradd});
+                    tip.broadcastMessage(tip.getMessage("ALL_SERVER_PROMPT"), p.getDisplayName(), cls.getItemMeta().getDisplayName(), afteradd);
                 }
             } else {
                 level -= dx;
                 if (level >= 0) {
                     item = setItemCuiLian(item, level);
                     String afteradd = levelCalc.makeLelStr(level).get(0);
-                    tip.getDnS(p, "CUILIAN_OVER", new String[]{afteradd, String.valueOf(dx)});
+                    tip.getDnS(p, "CUILIAN_OVER", afteradd, String.valueOf(dx));
                 } else {
                     item = setItemCuiLian(item, -1);
-                    tip.getDnS(p, "CUILIAN_OVER_ZERO", new String[]{String.valueOf(dx)});
+                    tip.getDnS(p, "CUILIAN_OVER_ZERO", String.valueOf(dx));
                 }
 
             }
@@ -186,7 +186,7 @@ public class NewAPI {
                 return Intensify.dataer.getCuilianStone(id);
             }
         }
-        return Intensify.dataer.NULLStone;
+        return null;
     }
 
     public static List<String> getListStringByType(Material itemid) {
@@ -266,7 +266,7 @@ public class NewAPI {
         return value;
     }
 
-    public static List<ItemStack> getAddAll(LivingEntity le){
+    public static List<ItemStack> getAddAll(LivingEntity le) {
         return addAll(NewAPI.getItemInHand(le), NewAPI.getItemInOffHand(le), le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots());
     }
 

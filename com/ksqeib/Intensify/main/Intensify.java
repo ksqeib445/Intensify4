@@ -3,8 +3,8 @@ package ksqeib.Intensify.main;
 import com.ksqeib.ksapi.KsAPI;
 import com.ksqeib.ksapi.command.Cmdregister;
 import com.ksqeib.ksapi.util.UtilManager;
-import ksqeib.Intensify.Droper.BlockDrop;
-import ksqeib.Intensify.Droper.MobDrop;
+import ksqeib.Intensify.droper.BlockDrop;
+import ksqeib.Intensify.droper.MobDrop;
 import ksqeib.Intensify.command.Cmd;
 import ksqeib.Intensify.command.CuiCmd;
 import ksqeib.Intensify.listener.*;
@@ -34,7 +34,7 @@ public class Intensify extends JavaPlugin {
     public void onEnable() {
         instance = this;
         init();
-        um.getTip().getDnS(Bukkit.getConsoleSender(), "enable", null);
+        um.getTip().getDnS(Bukkit.getConsoleSender(), "enable");
     }
     //关闭
 
@@ -81,34 +81,28 @@ public class Intensify extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        um.getTip().getDnS(Bukkit.getConsoleSender(), "disable", null);
+        um.getTip().getDnS(Bukkit.getConsoleSender(), "disable");
     }
 
-    @SuppressWarnings({"rawtypes", "unused"})
     public void reload() {
         um.getIo().reload();
         dataer.clearAll();
         dataer.init(um.getIo().getaConfig("config"));
         levelCalc.init(um.getIo().getaConfig(storepath + "/cuilianlevelup"));
-        Iterator localIterator = um.getIo().getaConfig("config").getConfigurationSection("id.items").getKeys(false).iterator();
         soul();
     }
 
     public void soul() {
-        @SuppressWarnings("rawtypes")
         Iterator localIterator = um.getIo().getaConfig("config").getConfigurationSection("id.items").getKeys(false).iterator();
         while (localIterator.hasNext()) {
             String i = (String) localIterator.next();
             //获取ID
-            FurnaceRecipe recipe = new FurnaceRecipe(new ItemStack(Material.getMaterial(Integer.parseInt(i))), Material.EMERALD);
+            Material now = Material.valueOf(i);
+            FurnaceRecipe recipe = new FurnaceRecipe(new ItemStack(now), Material.EMERALD);
             //创建(熔炉)配方
-            Material now = Material.getMaterial(Integer.parseInt(i));
-            for (int n = 0; n < now.getMaxDurability(); n++) {
-                //设置放什么
-                recipe.setInput(now, n);
-                //加入魔法配方
-                getServer().addRecipe(recipe);
-            }
+            recipe.setInput(now);
+            //加入魔法配方
+            getServer().addRecipe(recipe);
         }
     }
 }

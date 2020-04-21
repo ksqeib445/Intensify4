@@ -1,4 +1,4 @@
-package ksqeib.Intensify.Droper;
+package ksqeib.Intensify.droper;
 
 
 import ksqeib.Intensify.main.Intensify;
@@ -28,11 +28,9 @@ public class MobDrop
             //是否允许掉了
             return;
         }
-        if (!(e.getEntity().getKiller() instanceof Player)) {
+        if (e.getEntity().getKiller() == null)
             return;
-        } else {
-            p = e.getEntity().getKiller();
-        }
+        p = e.getEntity().getKiller();
         EntityType et = e.getEntityType();
         //获取生物
         int id = -1;
@@ -48,14 +46,14 @@ public class MobDrop
         if (id != -1) {
             //生物ID正确
             ItemStack item = null;
-            Double key = Intensify.dataer.rm.nextDouble() * 100;
+            double key = Intensify.dataer.rm.nextDouble() * 100;
             String type = Intensify.dataer.getMobId().get(id).split(" ")[1].toLowerCase();
             //标签
-            Double chance = Double.parseDouble(Intensify.dataer.getMobId().get(id).split(" ")[2]);
+            double chance = Double.parseDouble(Intensify.dataer.getMobId().get(id).split(" ")[2]);
             //概率
             item = Intensify.dataer.getItem(type);
             if (key < chance && p != null) {
-                Intensify.um.getTip().getDnS(p, "qhdrop", new String[]{item.getItemMeta().getDisplayName()});
+                Intensify.um.getTip().getDnS(p, "qhdrop", item.getItemMeta().getDisplayName());
                 //比概率小
                 e.getDrops().add(item);
             }

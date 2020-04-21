@@ -2,7 +2,6 @@ package ksqeib.Intensify.listener;
 
 import ksqeib.Intensify.enums.Sectype;
 import ksqeib.Intensify.main.NewAPI;
-import ksqeib.Intensify.util.Dataer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,7 +10,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 
@@ -47,7 +45,7 @@ public class MainListener implements Listener {
                 if ((e.getEntity() instanceof LivingEntity) && (damager instanceof LivingEntity)) {
                     LivingEntity damagerr = (LivingEntity) damager;
                     LivingEntity entity = (LivingEntity) e.getEntity();
-                    List<ItemStack> list1 =NewAPI.getAddAll(damagerr);
+                    List<ItemStack> list1 = NewAPI.getAddAll(damagerr);
                     List<ItemStack> list2 = NewAPI.getAddAll(entity);
                     double bs = NewAPI.getAddLevel(list1, Sectype.bloodSuck);
                     damage += bs * damage / 100;
@@ -120,18 +118,8 @@ public class MainListener implements Listener {
         int value = e.getAmount();
         Player p = e.getPlayer();
         Double i = NewAPI.getAddLevel(NewAPI.getAddAll(p), Sectype.experience);
-        if(i==0)return;
+        if (i == 0) return;
         e.setAmount((int) (value * (100 + i) / 100));
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void PlayerQuitEvent(PlayerQuitEvent e) {
-        Player p = e.getPlayer();
-        if (Dataer.instance.playerSuitEffectList.containsKey(p.getUniqueId())) {
-            NewAPI.setMaxHealth(p, Dataer.instance.playerSuitEffectHealthList.get(p.getUniqueId()));
-            Dataer.instance.playerSuitEffectHealthList.remove(p.getUniqueId());
-            Dataer.instance.playerSuitEffectList.remove(p.getUniqueId());
-        }
     }
 
 }

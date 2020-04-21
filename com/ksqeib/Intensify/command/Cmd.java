@@ -21,7 +21,7 @@ public class Cmd extends Command {
         if (args.length == 0) {
             //什么也没输入
             Intensify.um.getHelper("qh").sendno(cms, label);
-        } else if (args.length > 0) {
+        } else {
             Player p = null;
             if (cms instanceof Player) {
                 p = (Player) cms;

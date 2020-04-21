@@ -4,6 +4,7 @@ import ksqeib.Intensify.main.Intensify;
 import ksqeib.Intensify.util.Isqh;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Furnace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -67,7 +68,7 @@ public class Events implements Listener {
         Player p = Bukkit.getPlayer(pu);
         ItemStack smelt = furn.getInventory().getSmelting();
         ItemStack fuel = furn.getInventory().getFuel();
-        if (smelt.getEnchantmentLevel(Enchantment.getById(um.getIo().getaConfig("config").getInt("id.items." + smelt.getTypeId()))) >= Intensify.dataer.maxlevel) {
+        if (smelt.getEnchantmentLevel(Enchantment.getByKey(NamespacedKey.minecraft(um.getIo().getaConfig("config").getString("id.items." + smelt.getType().toString())))) >= Intensify.dataer.maxlevel) {
             //满级
             um.getTip().getDnS(p, "mmaxqh", null);
             return false;

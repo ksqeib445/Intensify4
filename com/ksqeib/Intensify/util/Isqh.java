@@ -56,9 +56,8 @@ public class Isqh {
         //遍历
         while (it.hasNext()) {
             String i = (String) it.next();
-            int a = Integer.parseInt(i);
 
-            if ((a == item.getTypeId()) && (item.getAmount() == 1)) {
+            if ((i.equals(item.getType().toString())) && (item.getAmount() == 1)) {
                 //如果ID相同，并且只有一个
                 return true;
             }

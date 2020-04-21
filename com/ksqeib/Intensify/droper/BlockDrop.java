@@ -1,4 +1,4 @@
-package ksqeib.Intensify.Droper;
+package ksqeib.Intensify.droper;
 
 import ksqeib.Intensify.main.Intensify;
 import org.bukkit.block.Block;
@@ -26,7 +26,7 @@ public class BlockDrop implements Listener {
         int id = -1;
         for (int i = 0; i < Intensify.dataer.getBlockId().size(); i++) {
             int a = Integer.parseInt(Intensify.dataer.getBlockId().get(i).split(" ")[0]);
-            if (a == block.getTypeId()) {
+            if (a == block.getType().getId()) {
                 //判断是否为掉了方块
                 id = i;
                 break;
@@ -45,7 +45,7 @@ public class BlockDrop implements Listener {
             item = Intensify.dataer.getItem(type);
             if ((key < chance) && p != null) {
                 //比概率小
-                Intensify.um.getTip().getDnS(p, "qhdrop", new String[]{item.getItemMeta().getDisplayName()});
+                Intensify.um.getTip().getDnS(p, "qhdrop", item.getItemMeta().getDisplayName());
                 //掉在地上
                 block.getWorld().dropItem(block.getLocation(), item);
             }

@@ -30,7 +30,7 @@ public class BListener implements Listener {
         int minLevel = NewAPI.getMinLevel(items);
         if (minLevel != -1) {
             if (minLevel >= Dataer.instance.cuiliannotice) {
-                tip.broadcastMessage("JOIN_SERVER_NOTICE", new String[]{p.getName()});
+                tip.broadcastMessage("JOIN_SERVER_NOTICE", p.getName());
             }
         }
     }

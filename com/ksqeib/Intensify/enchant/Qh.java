@@ -3,6 +3,8 @@ package ksqeib.Intensify.enchant;
 import ksqeib.Intensify.main.Intensify;
 import ksqeib.Intensify.store.Istone;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,14 +21,11 @@ public class Qh {
 
     public static ItemStack qh(int hash, ItemStack in, Istone stone) {
         Player p = Bukkit.getPlayer(Intensify.dataer.player.get(hash));
-        int id = in.getTypeId();
+        Material mat = in.getType();
         ItemStack item = new ItemStack(in);
-        if (item == null) {
-            return new ItemStack(0);
-        }
         item = addlorenbt(item);
         // 创建
-        Enchantment enc = Enchantment.getById(um.getIo().getaConfig("config").getInt("id.items." + id));
+        Enchantment enc = Enchantment.getByKey(NamespacedKey.minecraft(um.getIo().getaConfig("config").getString("id.items." + mat.toString())));
         // 等级
         int level = item.getEnchantmentLevel(enc);
         if (level == Intensify.dataer.maxlevel) {
@@ -53,12 +52,12 @@ public class Qh {
                 level -= 1;
                 if ((level >= Intensify.dataer.getLevel("boomlevel")) && (!stone.isIssafe())) {
                     // 等级高并且不安全就丢失
-                    um.getTip().getDnS(p, "hqhfail", new String[]{String.valueOf(Intensify.dataer.getLevel("boomlevel"))});
-                    return new ItemStack(0);
+                    um.getTip().getDnS(p, "hqhfail", String.valueOf(Intensify.dataer.getLevel("boomlevel")));
+                    return new ItemStack(Material.AIR);
                 }
             }
         }
-        if (item != null && item != new ItemStack(0)) {
+        if (item != null && item != new ItemStack(Material.AIR)) {
             item.addUnsafeEnchantment(enc, level);
             ItemMeta im = item.getItemMeta();
             im.setLore(setLore(item, level, Integer.parseInt(um.getMulNBT().getNBTdataStr(item, lorestart))));

@@ -43,7 +43,6 @@ public class Dataer {
     public List<Stone> customCuilianStoneList = new ArrayList<>();
     public HashMap<String, Stone> customCuilianStoneMap = new HashMap<>();
     public List<Material> itemList = new ArrayList<>();
-    public Stone NULLStone;
     //    Main
     public List<Material> arms = new ArrayList<>();
     public List<Material> helmet = new ArrayList<>();
@@ -60,8 +59,6 @@ public class Dataer {
     public List<String> localChestplate = new ArrayList<>();
     public List<String> localLeggings = new ArrayList<>();
     public List<String> localBoots = new ArrayList<>();
-    public HashMap<UUID, Integer> playerSuitEffectList = new HashMap<>();
-    public HashMap<UUID, Double> playerSuitEffectHealthList = new HashMap<>();
     public Boolean usingDefaultPower;
     public int cuilianmax = 0;
     public int cuiliannotice = 5;
@@ -82,15 +79,9 @@ public class Dataer {
         //几率读取
         qhchance = config.getDoubleList("chance.default");
         maxlevel = qhchance.size();
-        for (String s : config.getStringList("drop.blocks")) {
-            BlockId.add(s);
-        }
-        for (String s : config.getStringList("drop.mobs")) {
-            MobId.add(s);
-        }
+        BlockId.addAll(config.getStringList("drop.blocks"));
+        MobId.addAll(config.getStringList("drop.mobs"));
 //        淬炼
-
-        NULLStone = new Stone(new ItemStack(Material.AIR), "", new ArrayList<>(), 0, 0d, 0d);
         //1
         for (String str : config.getStringList("items.arms")) {
             arms.add(Material.getMaterial(str));
@@ -151,8 +142,8 @@ public class Dataer {
             int riseLevel = config1.getInt(i + ".riseLevel");
             Material itemtype = Material.getMaterial(config1.getString(i + ".Type"));
             List<Integer> dropLevel = config1.getIntegerList(i + ".dropLevel");
-            Double sharpStar = config1.getDouble(i + ".sharpStar");
-            Double basePro = config1.getDouble(i + ".basePro");
+            double sharpStar = config1.getDouble(i + ".sharpStar");
+            double basePro = config1.getDouble(i + ".basePro");
             ItemStack item = new ItemStack(itemtype);
             ItemMeta id = item.getItemMeta();
             id.addEnchant(Enchantment.OXYGEN, 1, true);
@@ -173,8 +164,8 @@ public class Dataer {
             String name = config1.getString(i + ".DisplayName");
             List<String> lore = config1.getStringList(i + ".Lore");
             Material itemtype = Material.getMaterial(config1.getString(i + ".Type"));
-            Double add = config1.getDouble(i + ".add");
-            Boolean issafer = config1.getBoolean(i + ".issafer");
+            double add = config1.getDouble(i + ".add");
+            boolean issafer = config1.getBoolean(i + ".issafer");
             ItemStack item = new ItemStack(itemtype);
             ItemMeta id = item.getItemMeta();
             id.setDisplayName(name);
@@ -187,11 +178,7 @@ public class Dataer {
     }
 
     public Stone getCuilianStone(String id) {
-        if (customCuilianStoneMap.containsKey(id)) {
-            return customCuilianStoneMap.get(id);
-        } else {
-            return NULLStone;
-        }
+        return customCuilianStoneMap.getOrDefault(id, null);
     }
 
     public double getChance(int lel) {
@@ -215,29 +202,8 @@ public class Dataer {
         return MobId;
     }
 
-    public Istone getStonebyItem(ItemStack i) {
-
-        for (String key : istones.keySet()) {
-            ItemStack get = istones.get(key).stone;
-            if (get.getItemMeta().hasDisplayName() && i.getItemMeta().hasDisplayName())
-                if (get.getItemMeta().equals(i.getItemMeta()))
-                    return istones.get(key);
-        }
-        return null;
-    }
-
     public Istone getStonebyId(String id) {
         if (istones.get(id) == null) return null;
-        return istones.get(id);
-    }
-
-    public Istone getStonebyNBT(ItemStack item) {
-        String id = Intensify.um.getMulNBT().getNBTdataStr(item, Istone.NBTID);
-//        Bukkit.getLogger().warning("f3");
-        if (id == null) return null;
-//        Bukkit.getLogger().warning("f2");
-        if (istones.get(id) == null) return null;
-//        Bukkit.getLogger().warning("f1");
         return istones.get(id);
     }
 
